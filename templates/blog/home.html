@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for post in posts %}
+        <div class="media border-bottom mb-4 pb-2">
+            <div class="media-body">
+                <h3> <a href="#" class="article-title">{{ post.title }}</a></h3>
+                <p class="mb-2 article-content">{{ post.content }}</p>
+                <p class="text-muted mb-4" style="font-size: 0.8em;"> By <a href="#" class="article-author">{{ post.author }}</a> on {{ post.date }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}
