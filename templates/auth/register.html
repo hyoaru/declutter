@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <h3 class="mb-3">Register</h3>
+
+        <div class="form-group mb-4">
+            <div class="form-group mb-2">
+                {{ form.user_email.label(class="form-label") }}
+
+                {% if form.user_email.errors %}
+                    {{ form.user_email(class="form-control is-invalid", required=False, type="email") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.user_email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% elif form.user_email.validate(form = form.user_email) %}
+                    {{ form.user_email(class="form-control is-valid", required=False) }}
+                    <div class="valid-feedback">
+                        <span>We'll never share your email with anyone else.</span>
+                    </div>
+                {% else %}
+                    {{ form.user_email(class="form-control", required=False) }}
+                    <small class="form-text">We'll never share your email with anyone else.</small>
+                {% endif %}
+
+            </div>
+    
+            <div class="form-group mb-2">
+                {{ form.user_username.label(class="form-label") }}
+
+                {% if form.user_username.errors %}
+                    {{ form.user_username(class="form-control is-invalid", required=False) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.user_username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% elif form.user_username.validate(form = form.user_username) %}
+                    {{ form.user_username(class="form-control is-valid", required=False) }}
+                {% else %}
+                    {{ form.user_username(class="form-control", required=False) }}
+                {% endif %}
+            </div>
+    
+            <div class="form-group mb-2">
+                {{ form.user_password.label(class="form-label") }}
+
+                {% if form.user_password.errors %}
+                    {{ form.user_password(class="form-control is-invalid", required=False) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.user_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% elif form.user_password.validate(form = form.user_password) %}
+                    {{ form.user_password(class="form-control is-valid", required=False) }}                    
+                {% else %}
+                    {{ form.user_password(class="form-control", required=False) }}
+                    <small class="form-text">Your password must be 8-40 characters long.</small>
+                {% endif %}
+
+            </div>
+    
+            <div class="form-group mb-2">
+                {{ form.user_password_confirm.label(class="form-label") }}
+
+                {% if form.user_password_confirm.errors %}
+                    {{ form.user_password_confirm(class="form-control is-invalid", required=False) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.user_password_confirm.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% elif form.user_password_confirm.validate(form = form.user_password_confirm) %}
+                    {{ form.user_password_confirm(class="form-control is-valid", required=False) }}                    
+                {% else %}
+                    {{ form.user_password_confirm(class="form-control", required=False) }}
+                {% endif %}
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.registration_submit(class="btn btn-primary", type="submit") }}
+        </div>
+
+        <div class="border-top mt-4 py-2">
+            <small class="text-muted">Already have an account? <a href="url_for('login')">Sign in</a> </small>
+        </div>
+
+    </form>
+{% endblock content %}
+
