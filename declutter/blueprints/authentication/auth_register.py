@@ -7,7 +7,8 @@ class RegistrationForm(FlaskForm):
         'Email',
         validators = [
             DataRequired(message = 'Must provide an email.'),
-            Email()
+            Email(),
+            Length(max = 200, message = 'Email must be under 200 characters')
         ]
     )
 
@@ -15,7 +16,7 @@ class RegistrationForm(FlaskForm):
         'Username',
         validators = [
             DataRequired(message = 'Must provide a username'), 
-            Length(min = 3, max = 20, message = 'Username must be between 3 and 20 characters long')
+            Length(min = 3, max = 40, message = 'Username must be between 3 and 40 characters long')
         ]
     )
 
