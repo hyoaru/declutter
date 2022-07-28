@@ -1,17 +1,7 @@
-import os
-from dotenv import load_dotenv
-from flask import Flask, render_template, url_for, flash, redirect
-from blueprints.authentication.auth_register import RegistrationForm
-from blueprints.authentication.auth_login import LoginForm
-
-app = Flask(
-    __name__, 
-    template_folder='templates',
-    static_folder='static',
-)
-
-load_dotenv()
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+from flask import render_template, url_for, flash, redirect
+from declutter import app
+from declutter.blueprints.authentication.auth_register import RegistrationForm
+from declutter.blueprints.authentication.auth_login import LoginForm
 
 postlist = [
     {
@@ -56,7 +46,3 @@ def login():
         else:
             flash('Login unsuccessful! Please check username and password.', 'warning')
     return render_template('auth/login.html', title = 'Login', form = login_form)
-
-if __name__ == "__main__":
-    app.run(debug=True)
- 
