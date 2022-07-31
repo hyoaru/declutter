@@ -1,4 +1,5 @@
 from flask import render_template, url_for, flash, redirect
+from flask_login import login_user, current_user, logout_user
 from declutter import app
 from declutter.blueprints.authentication.auth_register import RegistrationForm
 from declutter.blueprints.authentication.auth_login import LoginForm
@@ -34,6 +35,9 @@ def about():
 
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     registration_form = RegistrationForm()
     if registration_form.validate_on_submit():
         registered_user = Users(
@@ -52,11 +56,21 @@ def register():
 
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     login_form = LoginForm()
     if login_form.validate_on_submit():
-        if login_form.user_username.data == 'hyo' and login_form.user_password.data == '12345678':
+        user = Users.query.filter_by(user_username = login_form.user_username.data).first()
+        if user and bcrypt.check_password_hash(pw_hash = user.user_password, password = login_form.user_password.data):
+            login_user(user = user, remember = login_form.login_remember.data)
             flash(f'You have successfully logged in!', 'success')
             return redirect(url_for('home'))
         else:
-            flash('Login unsuccessful! Please check username and password.', 'warning')
+            flash('Login unsuccessful! Please check username and password.', 'danger')
     return render_template('auth/login.html', title = 'Login', form = login_form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
