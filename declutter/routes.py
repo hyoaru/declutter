@@ -2,6 +2,11 @@ from flask import render_template, url_for, flash, redirect
 from declutter import app
 from declutter.blueprints.authentication.auth_register import RegistrationForm
 from declutter.blueprints.authentication.auth_login import LoginForm
+from declutter.database import db, bcrypt
+
+# Database models
+from declutter.blueprints.models.users import Users
+from declutter.blueprints.models.posts import Posts
 
 postlist = [
     {
@@ -31,8 +36,17 @@ def about():
 def register():
     registration_form = RegistrationForm()
     if registration_form.validate_on_submit():
+        registered_user = Users(
+            user_email = registration_form.user_email.data,
+            user_username = registration_form.user_username.data,
+            user_password = bcrypt.generate_password_hash(registration_form.user_password.data).decode('utf-8')
+        )
+
+        db.session.add(registered_user)
+        db.session.commit()
+
         flash(f'Account successfully created for {registration_form.user_username.data}!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
 
     return render_template('auth/register.html', title = 'Register', form = registration_form)
 
