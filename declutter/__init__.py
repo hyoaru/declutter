@@ -21,9 +21,12 @@ app = create_app()
 db.init_app(app)
 bcrypt.init_app(app)
 login_manager.init_app(app)
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'warning'
 
 with app.app_context():
     db.create_all()
     print(f'\nCreated table names: {db.engine.table_names()}')
+
 
 from declutter import routes
