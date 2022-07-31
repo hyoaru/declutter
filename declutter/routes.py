@@ -27,11 +27,11 @@ postlist = [
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('blog/home.html', posts=postlist)
+    return render_template('main/home.html', posts=postlist)
 
 @app.route("/about")
 def about():
-    return render_template('blog/about.html', title='About')
+    return render_template('main/about.html', title='About')
 
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
