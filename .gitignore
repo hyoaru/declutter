@@ -1,3 +1,7 @@
-# Directory
+# Directories
 **/__pycache__/
+/test/
+
+# Files
+declutter/database/sqlite_database.db
 .env
