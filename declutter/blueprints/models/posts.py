@@ -1,5 +1,5 @@
 from datetime import datetime
-from declutter import db
+from declutter.database import db
 
 class Posts(db.Model):
     __tablename__ = 'posts'
