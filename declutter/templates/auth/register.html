@@ -72,9 +72,7 @@
                         {% for error in form.user_password_confirm.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
-                    </div>
-                {% elif form.user_password_confirm.validate(form = form.user_password_confirm) %}
-                    {{ form.user_password_confirm(class="form-control is-valid", required=False) }}                    
+                    </div>                   
                 {% else %}
                     {{ form.user_password_confirm(class="form-control", required=False) }}
                 {% endif %}
