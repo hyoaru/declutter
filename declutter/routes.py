@@ -1,5 +1,5 @@
-from flask import render_template, url_for, flash, redirect
-from flask_login import login_user, current_user, logout_user
+from flask import render_template, url_for, flash, redirect, request
+from flask_login import login_required, login_user, current_user, logout_user
 from declutter import app
 from declutter.blueprints.authentication.auth_register import RegistrationForm
 from declutter.blueprints.authentication.auth_login import LoginForm
@@ -65,10 +65,16 @@ def login():
         if user and bcrypt.check_password_hash(pw_hash = user.user_password, password = login_form.user_password.data):
             login_user(user = user, remember = login_form.login_remember.data)
             flash(f'You have successfully logged in!', 'success')
-            return redirect(url_for('home'))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login unsuccessful! Please check username and password.', 'danger')
     return render_template('auth/login.html', title = 'Login', form = login_form)
+
+@app.route("/account")
+@login_required
+def account():
+    return render_template('auth/account.html', title = 'Account')
 
 @app.route("/logout")
 def logout():

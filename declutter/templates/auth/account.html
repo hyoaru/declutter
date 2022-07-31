@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3 class="mb-3">Account information</h3>
+    <form action="">
+        <fieldset disabled>
+            <legend>Profile details</legend>
+
+            <div class="mb-2">
+                <label for="disabledTextEmail" class="form-label">Email</label>
+                <div class="row">
+                    <div class="col-11">
+                        <input type="text" class="form-control" value="{{ current_user.user_email }}">
+                    </div>
+                    <div class="col-1 py-1" style="font-size: 1.3em;">
+                        <a href="#"><i class="bi bi-pencil-square"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label for="disabledTextEmail" class="form-label">Username</label>
+                <div class="row">
+                    <div class="col-11">
+                        <input type="text" class="form-control" value="{{ current_user.user_username }}">
+                    </div>
+                    <div class="col-1 py-1" style="font-size: 1.3em;">
+                        <a href="#"><i class="bi bi-pencil-square"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label for="disabledTextEmail" class="form-label">Password</label>
+                <div class="row">
+                    <div class="col-11">
+                        <input type="password" class="form-control" value="password">
+                    </div>
+                    <div class="col-1 py-1" style="font-size: 1.3em;">
+                        <a href="#"><i class="bi bi-pencil-square"></i></a>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+{% endblock content %}
+
