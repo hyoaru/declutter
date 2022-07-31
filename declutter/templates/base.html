@@ -22,7 +22,7 @@
     {% endif %}
 </head>
 
-<body>
+<body class="scaled80">
     <header>
         <nav class="navbar navbar-expand-lg pt-4 px-3">
             <div class="container">
@@ -51,7 +51,7 @@
                                 {{ current_user.user_username }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#" class="dropdown-item">Settings</a></li>
+                                <li><a href="{{ url_for('account') }}" class="dropdown-item">Account</a></li>
                                 <li><a href="{{ url_for('logout') }}" class="dropdown-item">Log out</a></li>
                             </ul>
                         </div>
