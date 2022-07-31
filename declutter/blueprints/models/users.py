@@ -1,7 +1,12 @@
 from datetime import datetime
-from declutter.database import db
+from declutter.database import db, login_manager
+from flask_login import UserMixin
 
-class Users(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
+
+class Users(db.Model, UserMixin):
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key = True)
     user_email = db.Column(db.String(200), nullable = False, unique = True)
@@ -12,3 +17,6 @@ class Users(db.Model):
 
     def __repr__(self):
         return f"User('{self.user_email}', '{self.user_username}'"
+
+    def get_id(self):
+        return self.user_id

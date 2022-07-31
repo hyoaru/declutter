@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
-from declutter.database import db, bcrypt
+from declutter.database import db, bcrypt, login_manager
 
 def create_app():
     load_dotenv()
@@ -20,9 +20,10 @@ def create_app():
 app = create_app()
 db.init_app(app)
 bcrypt.init_app(app)
+login_manager.init_app(app)
 
 with app.app_context():
     db.create_all()
-    print(db.engine.table_names())
+    print(f'\nCreated table names: {db.engine.table_names()}')
 
 from declutter import routes
