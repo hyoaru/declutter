@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3 class="mb-3">Update email</h3>
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <fieldset disabled>
+            <div class="form-group mb-2">
+                <label class="form-label">Current email</label>
+                <input type="text" class="form-control" value="{{ current_user.user_email }}">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div class="form-group mb-2">
+                {{ form.user_email.label(class="form-label") }}
+                {% if form.user_email.errors %}
+                    {{ form.user_email(class="form-control is-invalid", required=False, type="email", placeholder="Enter your new email") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.user_email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% elif form.user_email.validate(form=form.user_email) %}
+                    {{ form.user_email(class="form-control is-valid", required=False, type="email", placeholder="Enter your new email") }}
+                    <div class="valid-feedback">
+                        <span>We'll never share your email with anyone else.</span>
+                    </div>
+                    
+                {% else %}
+                    {{ form.user_email(class="form-control", required=False, type="email", placeholder="Enter your new email") }}
+                    <small class="form-text">We'll never share your email with anyone else.</small>
+                {% endif %}
+            </div>
+            <div class="form-group mb-4">
+                {{ form.user_password_confirm.label(class="form-label") }}
+                {{ form.user_password_confirm(class="form-control", required=False, placeholder="Confirm password") }}
+            </div>
+            <div class="form-group">
+                <a href="{{ url_for('account') }}" class="btn btn-danger">Cancel</a>
+                {{ form.update_submit(class="btn btn-primary", type="submit") }}
+            </div>
+        </fieldset>
+    </form>
+{% endblock content %}

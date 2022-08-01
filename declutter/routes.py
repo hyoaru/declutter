@@ -3,6 +3,7 @@ from flask_login import login_required, login_user, current_user, logout_user
 from declutter import app
 from declutter.blueprints.authentication.auth_register import RegistrationForm
 from declutter.blueprints.authentication.auth_login import LoginForm
+from declutter.blueprints.authentication.auth_update_account import UpdateEmail, UpdatePassword, UpdateUsername
 from declutter.database import db, bcrypt
 
 # Database models
@@ -43,7 +44,7 @@ def register():
         registered_user = Users(
             user_email = registration_form.user_email.data,
             user_username = registration_form.user_username.data,
-            user_password = bcrypt.generate_password_hash(registration_form.user_password.data).decode('utf-8')
+            user_password = bcrypt.generate_password_hash(registration_form.user_password_confirm.data).decode('utf-8')
         )
 
         db.session.add(registered_user)
@@ -71,12 +72,45 @@ def login():
             flash('Login unsuccessful! Please check username and password.', 'danger')
     return render_template('auth/login.html', title = 'Login', form = login_form)
 
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
 @app.route("/account")
 @login_required
 def account():
     return render_template('auth/account.html', title = 'Account')
 
-@app.route("/logout")
-def logout():
-    logout_user()
-    return redirect(url_for('home'))
+@app.route("/update_username", methods = ['GET', 'POST'])
+@login_required
+def update_username():
+    update_username_form = UpdateUsername()
+    if update_username_form.validate_on_submit():
+        current_user.user_username = update_username_form.user_username.data
+        db.session.commit()
+        flash('Username successfully updated!', 'success')
+        return redirect(url_for('account'))
+    return render_template('auth/update_username.html', title = 'Username update', form = update_username_form)
+    
+@app.route("/update_password", methods = ['GET', 'POST'])
+@login_required
+def update_password():
+    update_password_form = UpdatePassword()
+    if update_password_form.validate_on_submit():
+        current_user.user_password = bcrypt.generate_password_hash(password = update_password_form.user_password_new_confirm.data).decode('utf-8')
+        db.session.commit()
+        flash('Password changed successfully!', 'success')
+        return redirect(url_for('account'))
+    return render_template('auth/update_password.html', title = 'Password update', form = update_password_form)
+
+@app.route("/update_email", methods = ['GET', 'POST'])
+@login_required
+def update_email():
+    update_email_form = UpdateEmail()
+    if update_email_form.validate_on_submit():
+        current_user.user_email = update_email_form.user_email.data
+        db.session.commit()
+        flash('Email updated successfully!', 'success')
+        return redirect(url_for('account'))
+    return render_template('auth/update_email.html', title = 'Email update', form = update_email_form)
