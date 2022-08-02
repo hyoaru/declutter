@@ -16,7 +16,7 @@ class Users(db.Model, UserMixin):
     posts = db.relationship('Posts', backref = 'post_author', lazy = True)
 
     def __repr__(self):
-        return f"User('{self.user_email}', '{self.user_username}'"
+        return f"User('{self.user_id}', {self.user_email}', '{self.user_username}', '{self.user_date_created})'"
 
     def get_id(self):
         return self.user_id

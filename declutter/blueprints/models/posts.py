@@ -10,6 +10,5 @@ class Posts(db.Model):
     post_date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
 
     def __repr__(self):
-        return f"Posts('{self.post_title}', '{self.post_date}'"
-
+        return f"Posts('{self.post_id}', '{self.post_title}', '{self.post_date}', '{self.post_author}'"
 

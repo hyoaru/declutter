@@ -2,6 +2,7 @@ from declutter import app
 from declutter.blueprints.forms.authentication.auth_register import RegistrationForm
 from declutter.blueprints.forms.authentication.auth_login import LoginForm
 from declutter.blueprints.forms.authentication.auth_update_account import UpdateEmail, UpdatePassword, UpdateUsername
+from declutter.blueprints.forms.main.post import PostCreate
 from declutter.database import db, bcrypt
 
 from flask import render_template, url_for, flash, redirect, request
@@ -11,25 +12,11 @@ from flask_login import login_required, login_user, current_user, logout_user
 from declutter.blueprints.models.users import Users
 from declutter.blueprints.models.posts import Posts
 
-postlist = [
-    {
-        'author': 'User',
-        'title': 'Some thoughts ive been keeping for a while',
-        'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus iaculis metus vel ex fringilla ornare vitae eget elit. Suspendisse efficitur congue eros, et tempus arcu. Mauris mollis, lectus et vehicula pellentesque, nibh ex rutrum lorem, ut sagittis enim odio quis nulla. Sed vehicula egestas cursus. Ut commodo eleifend condimentum. Nullam aliquam nunc imperdiet, euismod dui sed, bibendum turpis. Mauris eros est, feugiat a consequat in, lobortis eget leo. Morbi eleifend erat diam, in dapibus metus viverra vel.',
-        'date': 'July 16, 2022'
-    },
-    {
-        'author': 'User',
-        'title': 'Une hirondelle ne fait pas le printemps',
-        'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus iaculis metus vel ex fringilla ornare vitae eget elit. Suspendisse efficitur congue eros, et tempus arcu. Mauris mollis, lectus et vehicula pellentesque, nibh ex rutrum lorem, ut sagittis enim odio quis nulla. Sed vehicula egestas cursus. Ut commodo eleifend condimentum. Nullam aliquam nunc imperdiet, euismod dui sed, bibendum turpis. Mauris eros est, feugiat a consequat in, lobortis eget leo. Morbi eleifend erat diam, in dapibus metus viverra vel.',
-        'date': 'July 16, 2022'
-    }
-]
-
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('main/home.html', posts=postlist)
+    post_list = Posts.query.all()
+    return render_template('main/home.html', posts = post_list)
 
 @app.route("/about")
 def about():
@@ -47,10 +34,9 @@ def register():
             user_username = registration_form.user_username.data,
             user_password = bcrypt.generate_password_hash(registration_form.user_password_confirm.data).decode('utf-8')
         )
-
         db.session.add(registered_user)
         db.session.commit()
-
+        login_user(user = Users.query.filter_by(user_email = registered_user.user_email).first())
         flash(f'Account successfully created for {registration_form.user_username.data}!', 'success')
         return redirect(url_for('login'))
 
@@ -115,3 +101,19 @@ def update_email():
         flash('Email updated successfully!', 'success')
         return redirect(url_for('account'))
     return render_template('auth/update_email.html', title = 'Email update', form = update_email_form)
+
+@app.route("/post/write", methods = ['GET', 'POST'])
+@login_required
+def post_write():
+    post_write_form = PostCreate()
+    if post_write_form.validate_on_submit():
+        post = Posts(
+            post_title = post_write_form.post_title.data,
+            post_content = post_write_form.post_content.data,
+            post_author = current_user
+        )
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post has been created!', 'success')
+        return redirect(url_for('home'))
+    return render_template('main/post_create.html', title = 'Write', form = post_write_form)

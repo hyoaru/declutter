@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
+    <h3 class="mb-3">Home</h3>
     {% for post in posts %}
-        <div class="media border-bottom mb-4 pb-2">
+        <div class="media border-bottom mb-4 pb-4">
             <div class="media-body">
-                <h3> <a href="#" class="article-title">{{ post.title }}</a></h3>
-                <p class="mb-2 article-content">{{ post.content }}</p>
-                <p class="text-muted mb-4" style="font-size: 0.8em;"> By <a href="#" class="article-author">{{ post.author }}</a> on {{ post.date }}</p>
+                <h4> <a href="#" class="article-title">{{ post.post_title }}</a></h4>
+                <p class="mb-2 article-content">{{ post.post_content }}</p>
+                <small class="text-muted" style="font-size: 0.8em;"> By <a href="#" class="article-author">{{ post.post_author.user_username }}</a> on {{ post.post_date.strftime("%B %-d, %Y") }}</small>
             </div>
         </div>
     {% endfor %}
