@@ -40,6 +40,10 @@
                     </div>
                 </div>
             </div>
+
+            <div class="mt-4">
+                <small> Date created: <span class="text-muted">{{ current_user.user_date_created.strftime("%B %-d, %Y") }}</span> </small>
+            </div>
         </fieldset>
     </form>
 {% endblock content %}
