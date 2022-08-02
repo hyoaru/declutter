@@ -1,10 +1,11 @@
+from declutter import app
+from declutter.blueprints.forms.authentication.auth_register import RegistrationForm
+from declutter.blueprints.forms.authentication.auth_login import LoginForm
+from declutter.blueprints.forms.authentication.auth_update_account import UpdateEmail, UpdatePassword, UpdateUsername
+from declutter.database import db, bcrypt
+
 from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_required, login_user, current_user, logout_user
-from declutter import app
-from declutter.blueprints.authentication.auth_register import RegistrationForm
-from declutter.blueprints.authentication.auth_login import LoginForm
-from declutter.blueprints.authentication.auth_update_account import UpdateEmail, UpdatePassword, UpdateUsername
-from declutter.database import db, bcrypt
 
 # Database models
 from declutter.blueprints.models.users import Users
