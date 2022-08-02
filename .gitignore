@@ -3,5 +3,6 @@
 /test/
 
 # Files
-declutter/database/sqlite_database.db
 .env
+declutter/database/sqlite_database.db
+reset_database.py
