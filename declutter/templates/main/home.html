@@ -6,7 +6,7 @@
             <div class="media-body">
                 <h4> <a href="{{ url_for('post', post_id = post.post_id) }}" class="article-title">{{ post.post_title }}</a></h4>
                 <p class="mb-2 article-content">{{ post.post_content }}</p>
-                <small class="text-muted" style="font-size: 0.8em;"> By <a href="#" class="article-author">{{ post.post_author.user_username }}</a> on {{ post.post_date.replace(tzinfo=pytz.UTC).astimezone(tz.tzlocal()).strftime("%B %-d, %Y") }}</small>
+                <small class="text-muted" style="font-size: 0.8em;"> By <a href="#" class="article-author">{{ post.post_author.user_username }}</a> on {{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y") }}</small>
             </div>
         </div>
     {% endfor %}
