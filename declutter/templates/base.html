@@ -22,10 +22,10 @@
     {% endif %}
 </head>
 
-<body class="scaled80">
+<body class="px-4">
     <header>
-        <nav class="navbar navbar-expand-lg pt-4 px-3">
-            <div class="container">
+        <nav class="navbar navbar-expand-md fixed-top pt-4 px-4 bg-white">
+            <div class="container pt-3">
                 <a href="/" class="navbar-brand">
                     <i class="bi bi-fullscreen-exit me-2"></i>
                     Declutter
@@ -36,7 +36,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a href="{{ url_for('home') }}" class="nav-link">Home</a>
                         </li>
@@ -72,7 +72,8 @@
         </nav>
     </header>
 
-    <main class="my-4 container px-4 px-sm-2">
+    <main class="my-5 py-5 container">
+        <div class="div" style="height: 10px"></div>
         <div class="row">
             <section class="col-md-8 px-3 pe-md-5">
                 {% with messages = get_flashed_messages(with_categories = true) %}
