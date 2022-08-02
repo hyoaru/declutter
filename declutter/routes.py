@@ -4,6 +4,7 @@ from declutter.blueprints.forms.authentication.auth_login import LoginForm
 from declutter.blueprints.forms.authentication.auth_update_account import UpdateEmail, UpdatePassword, UpdateUsername
 from declutter.blueprints.forms.main.post import PostCreate
 from declutter.database import db, bcrypt
+from declutter.blueprints.modules.datetime import datetime_tolocal
 
 from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_required, login_user, current_user, logout_user
@@ -19,8 +20,8 @@ from declutter.blueprints.models.posts import Posts
 @app.route("/")
 @app.route("/home")
 def home():
-    post_list = Posts.query.all()
-    return render_template('main/home.html', posts = post_list, tz = tz, pytz = pytz, tzinfo = tzinfo)
+    posts = Posts.query.all()
+    return render_template('main/home.html', posts = posts, datetime_tolocal = datetime_tolocal)
 
 @app.route("/about")
 def about():
@@ -71,7 +72,7 @@ def logout():
 @app.route("/account")
 @login_required
 def account():
-    return render_template('auth/account.html', title = 'Account')
+    return render_template('auth/account.html', title = 'Account', datetime_tolocal = datetime_tolocal)
 
 @app.route("/update_username", methods = ['GET', 'POST'])
 @login_required
@@ -124,5 +125,11 @@ def post_write():
 
 @app.route("/post/<int:post_id>")
 def post(post_id):
-    post = Posts.query.get_or_404(post_id)
-    return render_template('main/post.html', title = post.post_title, post = post, tz = tz, pytz = pytz, tzinfo = tzinfo)
+    posts = Posts.query.get_or_404(post_id)
+    return render_template('main/post.html', title = posts.post_title, post = posts, datetime_tolocal = datetime_tolocal)
+
+@app.route("/profile")
+@login_required
+def profile():
+    posts = Posts.query.filter_by(post_user_id = current_user.user_id).all()
+    return render_template('main/profile.html', title = 'Profile', posts = posts, post_count = len(posts), datetime_tolocal = datetime_tolocal)
