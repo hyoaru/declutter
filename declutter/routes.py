@@ -8,6 +8,10 @@ from declutter.database import db, bcrypt
 from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_required, login_user, current_user, logout_user
 
+from datetime import datetime, tzinfo
+from dateutil import tz
+import pytz
+
 # Database models
 from declutter.blueprints.models.users import Users
 from declutter.blueprints.models.posts import Posts
@@ -16,7 +20,7 @@ from declutter.blueprints.models.posts import Posts
 @app.route("/home")
 def home():
     post_list = Posts.query.all()
-    return render_template('main/home.html', posts = post_list)
+    return render_template('main/home.html', posts = post_list, tz = tz, pytz = pytz, tzinfo = tzinfo)
 
 @app.route("/about")
 def about():
@@ -117,3 +121,8 @@ def post_write():
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
     return render_template('main/post_create.html', title = 'Write', form = post_write_form)
+
+@app.route("/post/<int:post_id>")
+def post(post_id):
+    post = Posts.query.get_or_404(post_id)
+    return render_template('main/post.html', title = post.post_title, post = post, tz = tz, pytz = pytz, tzinfo = tzinfo)
