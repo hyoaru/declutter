@@ -6,12 +6,8 @@ from declutter.blueprints.forms.main.post import PostCreate
 from declutter.database import db, bcrypt
 from declutter.blueprints.modules.datetime import datetime_tolocal
 
-from flask import render_template, url_for, flash, redirect, request
+from flask import abort, render_template, url_for, flash, redirect, request
 from flask_login import login_required, login_user, current_user, logout_user
-
-from datetime import datetime, tzinfo
-from dateutil import tz
-import pytz
 
 # Database models
 from declutter.blueprints.models.users import Users
@@ -109,34 +105,49 @@ def update_email():
 
 @app.route("/post/write", methods = ['GET', 'POST'])
 @login_required
-def post_write():
-    post_write_form = PostCreate()
-    if post_write_form.validate_on_submit():
+def post_create():
+    post_create_form = PostCreate()
+    if post_create_form.validate_on_submit():
         post = Posts(
-            post_title = post_write_form.post_title.data,
-            post_content = post_write_form.post_content.data,
+            post_title = post_create_form.post_title.data,
+            post_content = post_create_form.post_content.data,
             post_author = current_user
         )
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
-    return render_template('main/post_create.html', title = 'Write', form = post_write_form)
+    return render_template('main/post_create.html', title = 'Write', form = post_create_form)
 
 @app.route("/post/<int:post_id>")
 def post(post_id):
     posts = Posts.query.get_or_404(post_id)
+    print(f'Route: post, Request url: {request.url}')
     return render_template('main/post.html', title = posts.post_title, post = posts, datetime_tolocal = datetime_tolocal)
-
-@app.route("/user/<user_username>")
-@login_required
-def user(user_username):
-    user = Users.query.filter_by(user_username = user_username).first_or_404()
-    posts = Posts.query.filter_by(post_author = user)
-    return render_template('main/user.html', title = user.user_username, user = user, posts = posts, datetime_tolocal = datetime_tolocal)
 
 @app.route("/profile")
 @login_required
 def profile():
     posts = Posts.query.filter_by(post_user_id = current_user.user_id).all()
     return render_template('main/profile.html', title = 'Profile', posts = posts, post_count = len(posts), datetime_tolocal = datetime_tolocal)
+
+@app.route("/user/<user_username>")
+@login_required
+def user(user_username):
+    user = Users.query.filter_by(user_username = user_username).first_or_404()
+    if user != current_user:
+        posts = Posts.query.filter_by(post_author = user).all()
+        return render_template('main/user.html', title = user.user_username, user = user, posts = posts, post_count = len(posts), datetime_tolocal = datetime_tolocal)
+    else:
+        return redirect(url_for('profile'))
+
+@app.route("/post/<int:post_id>/delete", methods = ['POST'])
+def post_delete(post_id):
+    post = Posts.query.get_or_404(post_id)
+    if post.post_author != current_user:
+        abort(403)
+    else:
+        db.session.delete(post)
+        db.session.commit()
+        flash('Your post has been deleted!', 'success')
+        return redirect(request.referrer)
