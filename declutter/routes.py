@@ -128,6 +128,13 @@ def post(post_id):
     posts = Posts.query.get_or_404(post_id)
     return render_template('main/post.html', title = posts.post_title, post = posts, datetime_tolocal = datetime_tolocal)
 
+@app.route("/user/<user_username>")
+@login_required
+def user(user_username):
+    user = Users.query.filter_by(user_username = user_username).first_or_404()
+    posts = Posts.query.filter_by(post_author = user)
+    return render_template('main/user.html', title = user.user_username, user = user, posts = posts, datetime_tolocal = datetime_tolocal)
+
 @app.route("/profile")
 @login_required
 def profile():

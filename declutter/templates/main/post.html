@@ -4,7 +4,7 @@
         <div class="media-body">
             <h4 class="article-title">{{ post.post_title }}</h4>
             <p class="mb-2 article-content">{{ post.post_content }}</p>
-            <small class="text-muted" style="font-size: 0.8em;"> By <a href="#" class="article-author">{{ post.post_author.user_username }}</a> on {{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y %I:%M %p") }}</small>
+            <small class="text-muted" style="font-size: 0.8em;"> By <a href="{{ url_for('user', user_username = post.post_author.user_username) }}" class="article-author">{{ post.post_author.user_username }}</a> on {{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y %I:%M %p") }}</small>
         </div>
     </div>
 {% endblock content %}
