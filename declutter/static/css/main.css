@@ -10,3 +10,7 @@ html {
 .article-author{
     text-decoration: None;
 }
+
+.page-nav{
+    font-size: 0.8em;
+}
