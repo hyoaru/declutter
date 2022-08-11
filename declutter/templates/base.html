@@ -16,9 +16,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 
     {% if title %}
-    <title>Declutter - {{ title }}</title>
+        <title>Declutter - {{ title }}</title>
     {% else %}
-    <title>Declutter</title>
+        <title>Declutter</title>
     {% endif %}
 </head>
 
@@ -96,7 +96,7 @@
             </section>
             
             <aside class="col-md-4 mt-4 mt-md-0">
-                <h3>Sidebar</h3>
+                <h3 class="mb-3">Sidebar</h3>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item ps-1 ps-md-3">Latest post</li>
                     <li class="list-group-item ps-1 ps-md-3">Announcements</li>
