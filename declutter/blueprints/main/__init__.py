@@ -1,0 +1,1 @@
+from declutter.blueprints.main.views import main

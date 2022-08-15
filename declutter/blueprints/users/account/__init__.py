@@ -1,0 +1,1 @@
+from declutter.blueprints.users.account.views import users_account

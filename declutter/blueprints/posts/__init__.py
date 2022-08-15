@@ -1,0 +1,1 @@
+from declutter.blueprints.posts.views import posts
