@@ -4,6 +4,9 @@ from flask_login import login_user, current_user, logout_user
 # App imports
 from declutter.blueprints.authentication.forms.register import RegistrationForm
 from declutter.blueprints.authentication.forms.login import LoginForm
+from declutter.blueprints.authentication.forms.forgot_password import ForgotPassword
+from declutter.blueprints.authentication.forms.reset_password import ResetPassword
+from declutter.blueprints.authentication.utilities.mailing import send_reset_password_email
 from declutter.utilities.backend import db, bcrypt
 
 # Database models
@@ -63,3 +66,47 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
+
+@authentication.route("/forgot_password", methods = ['GET','POST'])
+def forgot_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+
+    forgot_password_form = ForgotPassword()
+    if forgot_password_form.validate_on_submit():
+        user = (
+            Users.query.filter_by(user_email = forgot_password_form.user_input.data).first()
+            or Users.query.filter_by(user_username = forgot_password_form.user_input.data).first())
+        
+        send_reset_password_email(user)
+        flash(f'A link for password reset has been sent to your email', 'info')
+        return redirect(url_for('authentication.forgot_password'))
+
+    return render_template('forgot_password.html', title = 'Forgot password', form = forgot_password_form)
+
+
+@authentication.route("/reset_password/<reset_token>", methods = ['GET', 'POST'])
+def reset_password(reset_token):
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+
+    user = Users.verify_reset_token(reset_token)
+    if user is None:
+        flash('That is an invalid or an expired token!', 'warning')
+        return redirect(url_for('authentication.forgot_password'))
+
+    reset_password_form = ResetPassword()
+    if reset_password_form.validate_on_submit():
+        user.user_password = (
+            bcrypt
+            .generate_password_hash(reset_password_form.user_password_confirm.data)
+            .decode('utf-8'))
+
+        db.session.commit()
+        flash(f'Your password has been updated!', 'success')
+        return redirect(url_for('authentication.login'))
+
+    return render_template('reset_password.html', title = 'Reset Password', form = reset_password_form)
+
+    

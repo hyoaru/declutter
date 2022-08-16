@@ -2,7 +2,7 @@ from typing import Type
 from flask import Flask
 
 # App imports
-from declutter.utilities.backend import db, bcrypt, login_manager
+from declutter.utilities.backend import db, bcrypt, login_manager, mail
 from declutter.config import Config
 
 # Blueprints
@@ -26,6 +26,7 @@ def create_app(config_class: Type[Config] = Config) -> Flask:
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
+    mail.init_app(app)
     login_manager.login_view = 'authentication.login'
     login_manager.login_message_category = 'warning'
 
