@@ -6,6 +6,10 @@ from declutter.blueprints.users.account.forms.update_account import UpdateEmail,
 from declutter.utilities.backend import db, bcrypt
 from declutter.utilities.datetime import datetime_tolocal
 
+# Database models
+from declutter.models.users import Users
+
+
 users_account = Blueprint(
     name = 'users_account', import_name = __name__,
     template_folder = '../../../templates/users/account', static_folder = '../../static')
