@@ -6,7 +6,7 @@
             <legend class="mb-3">Profile details</legend>
 
             <div class="mb-2">
-                <label for="disabledTextEmail" class="form-label">Email</label>
+                <label for="disabledTextEmail" class="form-label">Email</label>               
                 <div class="row">
                     <div class="col-11">
                         <input type="text" class="form-control" value="{{ current_user.user_email }}">
@@ -15,6 +15,12 @@
                         <a href="{{ url_for('users_account.update_email') }}"><i class="bi bi-pencil-square"></i></a>
                     </div>
                 </div>
+                {% if current_user.user_email_isverified %}
+                    <small class="text-success">Verified <i class="bi bi-patch-check"></i></small>
+                {% else %}
+                    <small><a href="{{ url_for('users_account.verify_email') }}" class="link-primary ms-1">Verify email</a></small>
+                {% endif %}                 
+
             </div>
 
             <div class="mb-2">

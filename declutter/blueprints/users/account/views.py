@@ -1,8 +1,9 @@
-from flask import render_template, url_for, flash, redirect, Blueprint
+from flask import render_template, url_for, flash, redirect, Blueprint, request
 from flask_login import login_required, current_user
 
 # App imports
 from declutter.blueprints.users.account.forms.update_account import UpdateEmail, UpdatePassword, UpdateUsername
+from declutter.blueprints.users.account.utilities.mailing import send_email_verification_request
 from declutter.utilities.backend import db, bcrypt
 from declutter.utilities.datetime import datetime_tolocal
 
@@ -57,8 +58,35 @@ def update_email():
     update_email_form = UpdateEmail()
     if update_email_form.validate_on_submit():
         current_user.user_email = update_email_form.user_email.data
+        current_user.user_email_isverified = False
         db.session.commit()
         flash('Email updated successfully!', 'success')
         return redirect(url_for('users_account.account'))
 
     return render_template('update_email.html', title = 'Email update', form = update_email_form)
+
+
+@users_account.route("/verify_email", methods = ['GET', 'POST'])
+@login_required
+def verify_email():
+    if current_user.user_email_isverified:
+        return redirect(url_for('users_account.account'))
+
+    send_email_verification_request(current_user)
+
+    flash('A link for email verification has been sent to your email', 'info')
+    return redirect(url_for('users_account.account'))
+
+
+@users_account.route("/email_verification<token>", methods = ['GET', 'POST'])
+def email_verification(token):
+    user = Users.verify_token(token)
+    if user is None:
+        flash('That is an invalid or or an expired token!', 'warning')
+        return redirect(url_for('users_account.account'))
+
+    user.user_email_isverified = True
+    db.session.commit()
+
+    flash('Email has been successfully verified', 'success')
+    return redirect(url_for('users_account.account'))
