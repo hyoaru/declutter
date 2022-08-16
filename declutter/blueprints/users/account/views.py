@@ -19,7 +19,7 @@ users_account = Blueprint(
 @users_account.route("/account")
 @login_required
 def account():
-    return render_template('account.html', title = 'Account', datetime_tolocal = datetime_tolocal)
+    return render_template('account.html', title = 'Account')
 
 
 @users_account.route("/update_username", methods = ['GET', 'POST'])

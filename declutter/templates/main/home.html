@@ -5,10 +5,10 @@
         <div class="media border-bottom mb-4 pb-4">
             <div class="media-body">
                 {% if post.post_author != current_user %}
-                    <h4> <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="article-title">{{ post.post_title }}</a></h4>
+                    <h4> <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="article-title text-break">{{ post.post_title }}</a></h4>
                 {% else %}
                     <div class="d-flex">
-                        <h4 class="me-auto"> <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="article-title">{{ post.post_title }}</a></h4>
+                        <h4 class="me-auto"> <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="article-title text-break">{{ post.post_title }}</a></h4>
                         <div class="dropstart">
                             <a href="#" class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown"></a>
                             <div class="dropdown-menu">
@@ -18,7 +18,7 @@
                                 <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModal-{{ post.post_id }}Label">{{ post.post_title }}</h5>
+                                    <h5 class="modal-title text-break" id="deleteModal-{{ post.post_id }}Label">{{ post.post_title }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">Are you sure you want to delete this post?</div>
@@ -34,8 +34,8 @@
                         </div>
                     </div>                
                 {% endif %}
-                <p class="mb-2 article-content">{{ post.post_content }}</p>
-                <small class="text-muted" style="font-size: 0.8em;"> By <a href="{{ url_for('users_general.user', user_username = post.post_author.user_username) }}" class="article-author">{{ post.post_author.user_username }}</a> on {{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y") }}</small>
+                <p class="mb-2 article-content text-break">{{ post.post_content }}</p>
+                <small class="text-muted" style="font-size: 0.8em;"> By <a href="{{ url_for('users_general.user', user_username = post.post_author.user_username) }}" class="article-author text-break">{{ post.post_author.user_username }}</a> on {{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y") }}</small>
             </div>
         </div>
     {% endfor %}

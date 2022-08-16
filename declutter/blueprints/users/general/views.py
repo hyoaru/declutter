@@ -23,9 +23,7 @@ def profile():
         .order_by(Posts.post_date_created_utc.desc())
         .paginate(per_page = 5, page = request.args.get(key = 'page', default = 1, type = int)))
         
-    return render_template(
-        'profile.html', title = 'Profile', posts = posts, 
-        post_count = posts.total, datetime_tolocal = datetime_tolocal, )
+    return render_template('profile.html', title = 'Profile', posts = posts, post_count = posts.total, )
 
 
 @users_general.route("/user/<user_username>")
@@ -45,7 +43,7 @@ def user(user_username):
 
         return render_template(
             'user.html', title = user.user_username, user = user, 
-            posts = posts, post_count = posts.total, datetime_tolocal = datetime_tolocal)
+            posts = posts, post_count = posts.total)
 
     else:
         return redirect(url_for('users_general.profile'))

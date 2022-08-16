@@ -38,9 +38,7 @@ def post(post_id):
     posts = Posts.query.get_or_404(post_id)
     print(f'Route: post, Request url: {request.url}')
 
-    return render_template(
-        'post.html', title = posts.post_title, post = posts, 
-        datetime_tolocal = datetime_tolocal, )
+    return render_template('post.html', title = posts.post_title, post = posts, )
 
 
 @posts.route("/post/<int:post_id>/delete", methods = ['POST'])

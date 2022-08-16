@@ -20,7 +20,7 @@ def home():
         .order_by(Posts.post_date_created_utc.desc())
         .paginate(per_page = 5, page = request.args.get(key = 'page', default = 1, type = int)))
 
-    return render_template('home.html', posts = posts, datetime_tolocal = datetime_tolocal, )
+    return render_template('home.html', posts = posts)
 
 
 @main.route("/about")

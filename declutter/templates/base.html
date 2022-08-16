@@ -98,8 +98,13 @@
             <aside class="col-md-4 mt-4 mt-md-0">
                 <h3 class="mb-3">Sidebar</h3>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item ps-1 ps-md-3">Latest post</li>
                     <li class="list-group-item ps-1 ps-md-3">Announcements</li>
+                    <li class="list-group-item ps-1 ps-md-3">Latest post</li>
+                    <div class="list-group-flush ps-3">
+                        {% for post in sidebar_posts %}
+                            <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="list-group-item text-break text-muted">{{ post.post_title }}</a>
+                        {% endfor %}
+                    </div>
                     <li class="list-group-item ps-1 ps-md-3">Calendar</li>
                     <li class="list-group-item ps-1 ps-md-3">Etc</li>
                 </ul>
