@@ -86,12 +86,12 @@ def forgot_password():
     return render_template('forgot_password.html', title = 'Forgot password', form = forgot_password_form)
 
 
-@authentication.route("/reset_password/<reset_token>", methods = ['GET', 'POST'])
-def reset_password(reset_token):
+@authentication.route("/reset_password/<token>", methods = ['GET', 'POST'])
+def reset_password(token):
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
 
-    user = Users.verify_reset_token(reset_token)
+    user = Users.verify_token(token)
     if user is None:
         flash('That is an invalid or an expired token!', 'warning')
         return redirect(url_for('authentication.forgot_password'))

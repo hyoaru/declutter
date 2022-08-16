@@ -25,18 +25,18 @@ class Users(db.Model, UserMixin):
     posts = db.relationship('Posts', backref = 'post_author', lazy = True)
 
 
-    def get_reset_token(self, expires_sec: int = 600):
-        reset_token = jwt.encode(
+    def get_token(self, expires_sec: int = 600):
+        token = jwt.encode(
             key = current_app.config.get('SECRET_KEY'), algorithm = 'HS256',
             payload = {'user_id': self.user_id, 'exp': datetime.now(pytz.UTC) + timedelta(seconds = expires_sec)}, )
 
-        return reset_token
+        return token
 
 
     @staticmethod
-    def verify_reset_token(reset_token):
+    def verify_token(token):
         try:
-            payload = jwt.decode(key = current_app.config.get('SECRET_KEY'), algorithms = 'HS256', jwt = reset_token, )
+            payload = jwt.decode(key = current_app.config.get('SECRET_KEY'), algorithms = 'HS256', jwt = token, )
         except:
             return None
 
