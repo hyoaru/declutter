@@ -1,6 +1,7 @@
 # Directories
 **/__pycache__/
 /test/
+/migrations/
 
 # Files
 .env
