@@ -6,5 +6,6 @@
 # Files
 .env
 declutter/database/sqlite_database.db
+/declutter/data
 reset_database.py
 query_database.py
