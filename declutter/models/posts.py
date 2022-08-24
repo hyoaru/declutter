@@ -12,6 +12,8 @@ class Posts(db.Model):
     post_title = db.Column(db.String(100), nullable = False)
     post_content = db.Column(db.Text, nullable = False)
     post_date_created_utc = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    post_isdeleted = db.Column(db.Boolean, nullable = False, default = False)
+
 
     def __repr__(self):
         return f"Posts('{self.post_id}', '{self.post_title}', '{self.post_date_created_utc}', '{self.post_author}'"

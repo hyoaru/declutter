@@ -14,6 +14,7 @@ def get_posts_recent_10() -> Type[Posts]:
 
     posts = (
         Posts.query
+        .filter_by(post_isdeleted = False)
         .order_by(Posts.post_date_created_utc.desc())
         .limit(10).all())
 
@@ -25,6 +26,7 @@ def get_users_recent_10() -> Type[Users]:
 
     users = (
         Users.query
+        .filter_by(user_isdeleted = False)
         .order_by(Users.user_date_created_utc.desc())
         .limit(10).all())
 

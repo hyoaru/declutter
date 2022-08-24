@@ -35,10 +35,11 @@ def post_create():
 
 @posts.route("/post/<int:post_id>")
 def post(post_id):
-    posts = Posts.query.get_or_404(post_id)
-    print(f'Route: post, Request url: {request.url}')
-
-    return render_template('post.html', title = posts.post_title, post = posts, )
+    post = Posts.query.get_or_404(post_id)
+    if post.post_isdeleted == True:
+        abort(404)
+    else:
+        return render_template('post.html', title = posts.post_title, post = post, )
 
 
 @posts.route("/post/<int:post_id>/delete", methods = ['POST'])
@@ -46,9 +47,9 @@ def post_delete(post_id):
     post = Posts.query.get_or_404(post_id)
     if post.post_author != current_user:
         abort(403)
-
     else:
-        db.session.delete(post)
+        post.post_isdeleted = True
+        # db.session.delete(post)
         db.session.commit()
         flash('Your post has been deleted!', 'success')
         return redirect(request.referrer)

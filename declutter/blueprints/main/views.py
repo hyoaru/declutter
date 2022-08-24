@@ -17,6 +17,7 @@ main = Blueprint(
 def home():
     posts = (
         Posts.query
+        .filter_by(post_isdeleted = False)
         .order_by(Posts.post_date_created_utc.desc())
         .paginate(per_page = 5, page = request.args.get(key = 'page', default = 1, type = int)))
 

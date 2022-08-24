@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, request, Blueprint
+from flask import render_template, url_for, redirect, request, Blueprint, abort
 from flask_login import login_required, current_user
 
 # App imports
@@ -19,7 +19,7 @@ users_general = Blueprint(
 def profile():
     posts = (
         Posts.query
-        .filter_by(post_user_id = current_user.user_id)
+        .filter_by(post_user_id = current_user.user_id, post_isdeleted = False)
         .order_by(Posts.post_date_created_utc.desc())
         .paginate(per_page = 5, page = request.args.get(key = 'page', default = 1, type = int)))
         
@@ -35,15 +35,18 @@ def user(user_username):
         .first_or_404())
 
     if user != current_user:
-        posts = (
-            Posts.query
-            .filter_by(post_author = user)
-            .order_by(Posts.post_date_created_utc.desc())
-            .paginate(per_page = 5, page = request.args.get(key = 'page', default = 1, type = int)))
+        if user.user_isdeleted == True:
+            abort(404)
+        else:
+            posts = (
+                Posts.query
+                .filter_by(post_author = user, post_isdeleted = False)
+                .order_by(Posts.post_date_created_utc.desc())
+                .paginate(per_page = 5, page = request.args.get(key = 'page', default = 1, type = int)))
 
-        return render_template(
-            'user.html', title = user.user_username, user = user, 
-            posts = posts, post_count = posts.total)
+            return render_template(
+                'user.html', title = user.user_username, user = user, 
+                posts = posts, post_count = posts.total)
 
     else:
         return redirect(url_for('users_general.profile'))
