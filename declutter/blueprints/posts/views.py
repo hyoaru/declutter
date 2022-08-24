@@ -36,10 +36,11 @@ def post_create():
 @posts.route("/post/<int:post_id>")
 def post(post_id):
     post = Posts.query.get_or_404(post_id)
-    if post.post_isdeleted == True:
+    post_author_deleted_or_deactivated = post.post_author.user_isdeleted or post.post_author.user_isdeactivated
+    if post.post_isdeleted or post_author_deleted_or_deactivated:
         abort(404)
     else:
-        return render_template('post.html', title = posts.post_title, post = post, )
+        return render_template('post.html', title = post.post_title, post = post, )
 
 
 @posts.route("/post/<int:post_id>/delete", methods = ['POST'])

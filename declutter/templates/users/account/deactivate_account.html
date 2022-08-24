@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3 class="mb-4">Deactivate Account</h3>
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <fieldset>
+            <div class="form-group mb-2">
+                <label for="" class="form-label">Please enter <span class="text-muted">`{{ form.get_deactivate_confirmation() }}`</span> to confirm</label>
+                {% if form.deactivate_confirmation.errors %}
+                    {{ form.deactivate_confirmation(class="form-control is-invalid", placeholder="Enter deactivation confirmation", required=False) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.deactivate_confirmation.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% elif form.deactivate_confirmation.validate(form = form.deactivate_confirmation) %}
+                    {{ form.deactivate_confirmation(class="form-control is-valid", placeholder="Enter deactivation confirmation", required=False) }}
+                {% else %}
+                    {{ form.deactivate_confirmation(class="form-control", placeholder="Enter deactivation confirmation", required=False) }}
+                {% endif %}
+            </div>
+            <div class="form-group mb-4">
+                {{ form.user_password_confirm.label(class="form-label") }}
+                {{ form.user_password_confirm(class="form-control", required=False, placeholder="Enter your password") }}
+            </div>
+            <div class="form-group">
+                <a href="{{ url_for('users_account.account') }}" class="btn btn-danger">Cancel</a>
+                {{ form.deactivate_submit(class="btn btn-primary", type="submit") }}
+            </div>            
+        </fieldset>
+    </form>
+{% endblock content %}

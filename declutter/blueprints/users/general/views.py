@@ -35,7 +35,7 @@ def user(user_username):
         .first_or_404())
 
     if user != current_user:
-        if user.user_isdeleted == True:
+        if user.user_isdeleted == True or user.user_isdeactivated == True:
             abort(404)
         else:
             posts = (

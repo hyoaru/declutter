@@ -5,6 +5,7 @@ from declutter.utilities.datetime import datetime_tolocal
 
 # Database models
 from declutter.models.posts import Posts
+from declutter.models.users import Users
 
 
 main = Blueprint(
@@ -17,6 +18,9 @@ main = Blueprint(
 def home():
     posts = (
         Posts.query
+        .filter(
+            Posts.post_author.has(Users.user_isdeactivated == False),
+            Posts.post_author.has(Users.user_isdeleted == False),)
         .filter_by(post_isdeleted = False)
         .order_by(Posts.post_date_created_utc.desc())
         .paginate(per_page = 5, page = request.args.get(key = 'page', default = 1, type = int)))

@@ -24,6 +24,8 @@ class Users(db.Model, UserMixin):
     user_password = db.Column(db.String(40), nullable = False)
     user_date_created_utc = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     user_isdeleted = db.Column(db.Boolean, nullable = False, default = False)
+    user_isdeactivated = db.Column(db.Boolean, nullable = False, default = False)
+    user_date_deactivated_utc = db.Column(db.DateTime, nullable = True)
     posts = db.relationship('Posts', backref = 'post_author', lazy = True)
 
 

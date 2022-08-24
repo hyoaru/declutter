@@ -51,6 +51,10 @@ def login():
     if login_form.validate_on_submit():
         user = Users.query.filter_by(user_username = login_form.user_username.data).first()
         if user and bcrypt.check_password_hash(pw_hash = user.user_password, password = login_form.user_password.data):
+            user.user_isdeactivated = False
+            user.user_date_deactivated_utc = None
+            db.session.commit()
+            
             login_user(user = user, remember = login_form.login_remember.data)
             flash(f'You have successfully logged in!', 'success')
             next_page = request.args.get('next')

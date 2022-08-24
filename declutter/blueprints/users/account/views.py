@@ -1,8 +1,11 @@
+from crypt import methods
+from datetime import datetime
 from flask import render_template, url_for, flash, redirect, Blueprint, request
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, logout_user
 
 # App imports
 from declutter.blueprints.users.account.forms.update_account import UpdateEmail, UpdatePassword, UpdateUsername
+from declutter.blueprints.users.account.forms.deactivate_account import DeactivateAccount
 from declutter.blueprints.users.account.utilities.mailing import send_email_verification_request
 from declutter.utilities.backend import db, bcrypt
 from declutter.utilities.datetime import datetime_tolocal
@@ -22,7 +25,7 @@ def account():
     return render_template('account.html', title = 'Account')
 
 
-@users_account.route("/update_username", methods = ['GET', 'POST'])
+@users_account.route("/account/update_username", methods = ['GET', 'POST'])
 @login_required
 def update_username():
     update_username_form = UpdateUsername()
@@ -35,7 +38,7 @@ def update_username():
     return render_template('update_username.html', title = 'Username update', form = update_username_form)
     
 
-@users_account.route("/update_password", methods = ['GET', 'POST'])
+@users_account.route("/account/update_password", methods = ['GET', 'POST'])
 @login_required
 def update_password():
     update_password_form = UpdatePassword()
@@ -52,7 +55,7 @@ def update_password():
     return render_template('update_password.html', title = 'Password update', form = update_password_form)
 
 
-@users_account.route("/update_email", methods = ['GET', 'POST'])
+@users_account.route("/account/update_email", methods = ['GET', 'POST'])
 @login_required
 def update_email():
     update_email_form = UpdateEmail()
@@ -66,7 +69,7 @@ def update_email():
     return render_template('update_email.html', title = 'Email update', form = update_email_form)
 
 
-@users_account.route("/verify_email", methods = ['GET', 'POST'])
+@users_account.route("/account/verify_email", methods = ['GET', 'POST'])
 @login_required
 def verify_email():
     if current_user.user_email_isverified:
@@ -78,7 +81,7 @@ def verify_email():
     return redirect(url_for('users_account.account'))
 
 
-@users_account.route("/email_verification<token>", methods = ['GET', 'POST'])
+@users_account.route("/account/email_verification<token>", methods = ['GET', 'POST'])
 def email_verification(token):
     user = Users.verify_token(token)
     if user is None:
@@ -90,3 +93,19 @@ def email_verification(token):
 
     flash('Email has been successfully verified', 'success')
     return redirect(url_for('users_account.account'))
+
+
+@users_account.route("/account/deactivate_account", methods = ['GET', 'POST'])
+@login_required
+def deactivate_account():
+    deactivate_account_form = DeactivateAccount()
+    if deactivate_account_form.validate_on_submit():
+        current_user.user_isdeactivated = True
+        current_user.user_date_deactivated_utc = datetime.utcnow()
+        db.session.commit()
+
+        logout_user()
+        flash('Account deactivated succesfully', 'success')
+        return redirect(url_for('main.home'))
+
+    return render_template('deactivate_account.html', title = 'Deactivate Account', form = deactivate_account_form)

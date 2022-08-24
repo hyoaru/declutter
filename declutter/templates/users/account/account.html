@@ -47,8 +47,13 @@
                 </div>
             </div>
 
-            <div class="mt-4">
-                <small> Date created: <span class="text-muted">{{ datetime_tolocal(current_user.user_date_created_utc).strftime("%B %-d, %Y") }}</span> </small>
+            <div class="mt-4 d-flex">
+                <div class="me-auto">
+                    <small>Date created: <span class="text-muted">{{ datetime_tolocal(current_user.user_date_created_utc).strftime("%B %-d, %Y") }}</span> </small>
+                </div>
+                <div class="justify-content-end me-5 pe-xl-4">
+                    <small><a href="{{ url_for('users_account.deactivate_account') }}" class="text-secondary" style="text-decoration: None;">Deactivate Account</a></small>
+                </div>
             </div>
         </fieldset>
     </form>
