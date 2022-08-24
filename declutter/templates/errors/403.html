@@ -1,0 +1,11 @@
+{% extends "base_errors.html" %}
+{% block content %}
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="text-center">
+            <h1 class="display-1 fw-bold">403</h1>
+            <p class="fs-3"><span class="text-danger">You don't have the permission <span class="text-danger">to do that</span></span></p>
+            <img src="{{ url_for('static', filename='pages/errors/resources/images/error_image.svg') }}" alt="" class="img-fluid w-50 ms-3 ps-2 pt-3">
+            </div>
+        </div>
+    </div>
+{% endblock content %}
