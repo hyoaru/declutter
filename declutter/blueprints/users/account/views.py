@@ -4,11 +4,12 @@ from flask import render_template, url_for, flash, redirect, Blueprint, request
 from flask_login import login_required, current_user, logout_user
 
 # App imports
-from declutter.blueprints.users.account.forms.update_account import UpdateEmail, UpdatePassword, UpdateUsername
+from declutter.blueprints.users.account.forms.update_email import UpdateEmail
+from declutter.blueprints.users.account.forms.update_password import UpdatePassword
+from declutter.blueprints.users.account.forms.update_username import UpdateUsername
 from declutter.blueprints.users.account.forms.deactivate_account import DeactivateAccount
 from declutter.blueprints.users.account.utilities.mailing import send_email_verification_request
 from declutter.utilities.backend import db, bcrypt
-from declutter.utilities.datetime import datetime_tolocal
 
 # Database models
 from declutter.models.users import Users
