@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h3 class="mb-4">Update username</h3>
+    <h3 class="mb-4 fw-bold">Update username</h3>
     <form action="" method="POST">
         {{ form.csrf_token }}
         <fieldset disabled class="mb-2">
-            <label class="form-label">Current username</label>
+            <label class="form-label fw-semibold">Current username</label>
             <input type="text" class="form-control" value="{{ current_user.user_username }}">
         </fieldset>
         <fieldset class="form-group">
             <div class="form-group mb-4">
-                {{ form.user_username.label(class="form-label") }}
+                {{ form.user_username.label(class="form-label fw-semibold") }}
 
                 {% if form.user_username.errors %}
                     {{ form.user_username(class="form-control is-invalid", required=False) }}

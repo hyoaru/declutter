@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h3 class="mb-4">Account information</h3>
+    <h3 class="mb-4 fw-bold">Account information</h3>
     <form action="">
         <fieldset disabled>
-            <legend class="mb-3">Profile details</legend>
+            <legend class="mb-3 fw-semibold">Profile details</legend>
 
             <div class="mb-2">
-                <label for="disabledTextEmail" class="form-label">Email</label>               
+                <label for="disabledTextEmail" class="form-label fw-semibold">Email</label>               
                 <div class="row">
                     <div class="col-11">
                         <input type="text" class="form-control" value="{{ current_user.user_email }}">
@@ -24,7 +24,7 @@
             </div>
 
             <div class="mb-2">
-                <label for="disabledTextEmail" class="form-label">Username</label>
+                <label for="disabledTextEmail" class="form-label fw-semibold">Username</label>
                 <div class="row">
                     <div class="col-11">
                         <input type="text" class="form-control" value="{{ current_user.user_username }}">
@@ -36,7 +36,7 @@
             </div>
 
             <div class="mb-2">
-                <label for="disabledTextEmail" class="form-label">Password</label>
+                <label for="disabledTextEmail" class="form-label fw-semibold">Password</label>
                 <div class="row">
                     <div class="col-11">
                         <input type="password" class="form-control" value="password">
@@ -52,7 +52,7 @@
                     <small>Date created: <span class="text-muted">{{ datetime_tolocal(current_user.user_date_created_utc).strftime("%B %-d, %Y") }}</span> </small>
                 </div>
                 <div class="justify-content-end me-5 pe-xl-4">
-                    <small><a href="{{ url_for('users_account.deactivate_account') }}" class="text-secondary" style="text-decoration: None;">Deactivate Account</a></small>
+                    <small><a href="{{ url_for('users_account.deactivate_account') }}" class="text-secondary text-decoration-none">Deactivate Account</a></small>
                 </div>
             </div>
         </fieldset>

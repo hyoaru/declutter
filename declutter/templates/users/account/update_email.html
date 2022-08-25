@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h3 class="mb-4">Update email</h3>
+    <h3 class="mb-4 fw-bold">Update email</h3>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         <fieldset disabled>
             <div class="form-group mb-2">
-                <label class="form-label">Current email</label>
+                <label class="form-label fw-semibold">Current email</label>
                 <input type="text" class="form-control" value="{{ current_user.user_email }}">
             </div>
         </fieldset>
 
         <fieldset>
             <div class="form-group mb-2">
-                {{ form.user_email.label(class="form-label") }}
+                {{ form.user_email.label(class="form-label fw-semibold") }}
                 {% if form.user_email.errors %}
                     {{ form.user_email(class="form-control is-invalid", required=False, type="email", placeholder="Enter your new email") }}
                     <div class="invalid-feedback">
@@ -32,7 +32,7 @@
                 {% endif %}
             </div>
             <div class="form-group mb-4">
-                {{ form.user_password_confirm.label(class="form-label") }}
+                {{ form.user_password_confirm.label(class="form-label fw-semibold") }}
                 {{ form.user_password_confirm(class="form-control", required=False, placeholder="Confirm password") }}
             </div>
             <div class="form-group">

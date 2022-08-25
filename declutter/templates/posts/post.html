@@ -3,10 +3,10 @@
     <div class="media">
         <div class="media-body">
             {% if post.post_author != current_user %}
-                <h3 class="article-title text-break">{{ post.post_title }}</h3>
+                <h3 class="article-title fw-bold text-break">{{ post.post_title }}</h3>
             {% else %}
                 <div class="d-flex">
-                    <h3 class="me-auto"> <a href="#" class="article-title text-break">{{ post.post_title }}</a></h3>
+                    <h3 class="me-auto"> <a href="#" class="article-title fw-bold text-break">{{ post.post_title }}</a></h3>
                     <div class="dropstart">
                         <a href="#" class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown"></a>
                         <div class="dropdown-menu">

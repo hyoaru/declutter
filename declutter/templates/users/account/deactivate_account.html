@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h3 class="mb-4">Deactivate Account</h3>
+    <h3 class="mb-4 fw-bold">Deactivate Account</h3>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         <fieldset>
             <div class="form-group mb-2">
-                <label for="" class="form-label">Please enter <span class="text-muted">`{{ form.get_deactivate_confirmation() }}`</span> to confirm</label>
+                <label for="" class="form-label fw-semibold">Please enter <span class="text-muted">`{{ form.get_deactivate_confirmation() }}`</span> to confirm</label>
                 {% if form.deactivate_confirmation.errors %}
                     {{ form.deactivate_confirmation(class="form-control is-invalid", placeholder="Enter deactivation confirmation", required=False) }}
                     <div class="invalid-feedback">
@@ -20,7 +20,7 @@
                 {% endif %}
             </div>
             <div class="form-group mb-4">
-                {{ form.user_password_confirm.label(class="form-label") }}
+                {{ form.user_password_confirm.label(class="form-label fw-semibold") }}
                 {{ form.user_password_confirm(class="form-control", required=False, placeholder="Enter your password") }}
             </div>
             <div class="form-group">
