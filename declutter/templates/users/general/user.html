@@ -4,15 +4,25 @@
         <h3 class="mb-0 text-break fw-bold">{{ user.user_username }} </h3>
         <small class="text-muted">Date joined: {{ datetime_tolocal(user.user_date_created_utc).strftime("%B %-d, %Y") }}</small>
     </div>
-    {% for post in posts.items %}
-        <div class="media border-bottom mb-4 pb-4">
-            <div class="media-body">
-                <h4> <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="article-title fw-semibold text-break">{{ post.post_title }}</a></h4>
-                <p class="mb-2 article-content text-break">{{ post.post_content }}</p>
-                <small class="text-muted" style="font-size: 0.8em;"> By <a href="#" class="article-author text-break">{{ post.post_author.user_username }}</a> on {{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y") }}</small>
+    {% if not posts.items %}
+        <div class="d-flex justify-content-center opacity-75 mb-3">
+            <div class="text-center">
+                <h4 class="fw-semibold">No posts yet</h4>
+                <p class="lead mb-4">{{ user.user_username }} haven't written anything yet as of date</p>
+                <img src="{{ url_for('static', filename='images/empty.svg') }}" class="img-fluid w-50" alt="">
             </div>
         </div>
-    {% endfor %}
+    {% else %}
+        {% for post in posts.items %}
+            <div class="media border-bottom mb-4 pb-4">
+                <div class="media-body">
+                    <h4> <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="article-title fw-semibold text-break">{{ post.post_title }}</a></h4>
+                    <p class="mb-2 article-content text-break">{{ post.post_content }}</p>
+                    <small class="text-muted" style="font-size: 0.8em;"> By <a href="#" class="article-author text-break">{{ post.post_author.user_username }}</a> on {{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y") }}</small>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="d-flex justify-content-end">
         {% if posts.has_prev %}
             <a href="{{ url_for('users_general.profile', page = posts.page - 1) }}"><i class="bi bi-caret-left-fill page-nav"></i></a>
