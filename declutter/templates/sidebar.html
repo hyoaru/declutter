@@ -1,0 +1,22 @@
+<aside class="col-md-4 mt-4 mt-md-0">
+    <h3 class="mb-3 fw-bold">{{ datetime_tolocal(datetime_utcnow).strftime("%B %-d, %Y") }}</h3>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item ps-1 ps-md-3 fw-semibold">Announcements</li>
+        <li class="list-group-item ps-1 ps-md-3 fw-semibold">Daily quote</li>
+            <div class="list-group-flush ps-3">
+                <span class="list-group-item text-break text-muted">{{ quote_of_the_day.get('content') }} - {{ quote_of_the_day.get('author') }}</span>
+            </div>                    
+        <li class="list-group-item ps-1 ps-md-3 fw-semibold">Latest posts</li>
+            <div class="list-group-flush ps-3">
+                {% for post in posts_recent_10 %}
+                    <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="list-group-item text-break text-muted">{{ post.post_title }}</a>
+                {% endfor %}
+            </div>
+        <li class="list-group-item ps-1 ps-md-3 fw-semibold">Recently joined users</li>
+            <div class="list-group-flush ps-3">
+                {% for user in users_recent_10 %}
+                    <a href="{{ url_for('users_general.user', user_username = user.user_username) }}" class="list-group-item text-break text-muted">{{ user.user_username }}</a>
+                {% endfor %}
+            </div>                    
+    </ul>
+</aside>
