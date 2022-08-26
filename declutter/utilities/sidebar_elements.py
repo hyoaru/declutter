@@ -19,7 +19,7 @@ def get_posts_recent_10() -> Type[Posts]:
             Posts.post_author.has(Users.user_isdeleted == False),)        
         .filter_by(post_isdeleted = False)
         .order_by(Posts.post_date_created_utc.desc())
-        .limit(10).all())
+        .limit(8).all())
 
     return posts
 
@@ -31,7 +31,7 @@ def get_users_recent_10() -> Type[Users]:
         Users.query
         .filter_by(user_isdeleted = False, user_isdeactivated = False)
         .order_by(Users.user_date_created_utc.desc())
-        .limit(10).all())
+        .limit(8).all())
 
     return users
 
@@ -64,7 +64,7 @@ def load_binary(file_name: str, data_root_path: str = None):
         return {}
 
 
-def get_daily_random_quotes(api: str = "https://api.quotable.io/random?tags=famous-quotes"):
+def get_daily_random_quotes(api: str = "https://api.quotable.io/random?tags=famous-quotes") -> dict:
     """Returns daily quote from an api if the dateToReload value of the quote dictionary is greater than utc date now."""
 
     quote = load_binary(file_name = 'sidebar_daily_quote')
