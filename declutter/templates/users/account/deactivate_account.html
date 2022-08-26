@@ -5,7 +5,7 @@
         {{ form.hidden_tag() }}
         <fieldset>
             <div class="form-group mb-2">
-                <label for="" class="form-label fw-semibold">Please enter <span class="text-muted">`{{ form.get_deactivate_confirmation() }}`</span> to confirm</label>
+                <label for="" class="form-label fw-semibold">Please enter <span class="text-muted user-select-none">`{{ form.get_deactivate_confirmation() }}`</span> to confirm</label>
                 {% if form.deactivate_confirmation.errors %}
                     {{ form.deactivate_confirmation(class="form-control is-invalid", placeholder="Enter deactivation confirmation", required=False) }}
                     <div class="invalid-feedback">
