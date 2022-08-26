@@ -23,7 +23,7 @@
 </head>
 
 <body class="px-4">
-    {% include 'header.html' %}
+    {% include '/layout/default/header.html' %}
 
     <main class="my-5 py-5 container">
         <div class="div" style="height: 10px"></div>
@@ -41,7 +41,7 @@
 
                 {% block content %}{% endblock content %}
             </section>
-            {% include 'sidebar.html' %}
+            {% include '/layout/default/sidebar.html' %}
         </div>
     </main>
 

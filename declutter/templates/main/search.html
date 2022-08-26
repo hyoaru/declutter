@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        {% if search_query != '' %}
+            <h3 class="mb-4 fw-bold text-break">You searched for: {{ search_query }}</h3>
+        {% else %}
+            <h3 class="mb-4 fw-bold">Looking for something?</h3>
+        {% endif %}
+        {% include '/layout/default/search_bar.html' %}
+    </div>
+    {% if search_query == '' %}
+        <div class="d-flex justify-content-center opacity-75 mt-4">
+            <div class="text-center">
+                <h4 class="fw-semibold">Waiting to search</h4>
+                <p class="lead mb-4">Start searching and it'll show up here</p>
+                <img src="{{ url_for('static', filename='images/search.svg') }}" class="img-fluid w-50" alt="">
+            </div>
+        </div>
+    {% elif search_query != '' and total_items_matched == 0 %}
+        <div class="d-flex justify-content-center opacity-75 mt-4">
+            <div class="text-center">
+                <h4 class="fw-semibold">No results found</h4>
+                <p class="lead mb-4">Nothing came up from our database</p>
+                <img src="{{ url_for('static', filename='images/no_results.svg') }}" class="img-fluid w-50" alt="">
+            </div>
+        </div>
+    {% else %}
+        {% if request.args.get('by_user_page') %}
+            {% include '/main/search/search_query_by_user.html' %}
+        {% elif request.args.get('by_post_title_page') %}
+            {% include '/main/search/search_query_by_post_title.html' %}
+        {% elif request.args.get('by_post_content_page') %}
+            {% include '/main/search/search_query_by_post_content.html' %}
+        {% else %}
+            {% include '/main/search/search_query_by_user.html' %}
+            {% include '/main/search/search_query_by_post_title.html' %}
+            {% include '/main/search/search_query_by_post_content.html' %}
+        {% endif %}
+    {% endif %}
+    {% endblock content %}
