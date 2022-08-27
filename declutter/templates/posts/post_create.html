@@ -3,35 +3,37 @@
     <h3 class="mb-4 fw-bold">Write</h3>
     <form action="" method="POST">
         {{ form.csrf_token }}
-        <fieldset>
-            <div class="form-group mb-3">
-                {% if form.post_title.errors %}
-                    {{ form.post_title(class="form-control is-invalid", placeholder="Title", required=False) }}
-                    <div class="invalid-feedback">
-                        {% for error in form.post_title.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.post_title(class="form-control", placeholder="Title", required=False) }}
-                {% endif %}
-            </div>
-            <div class="form-group mb-4">
-                {% if form.post_content.errors %}
-                    {{ form.post_content(class="form-control is-invalid", placeholder="Content", rows=10, required=False) }}
-                    <div class="invalid-feedback">
-                        {% for error in form.post_content.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.post_content(class="form-control", placeholder="Content", rows=10, required=False) }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <a href="{{ url_for('main.home') }}" class="btn btn-danger">Cancel</a>
-                {{ form.post_submit(class="btn btn-primary") }}
-            </div>
-        </fieldset>
+        <div class="ms-3">
+            <fieldset>
+                <div class="form-group mb-3">
+                    {% if form.post_title.errors %}
+                        {{ form.post_title(class="form-control is-invalid", placeholder="Title", required=False) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.post_title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.post_title(class="form-control", placeholder="Title", required=False) }}
+                    {% endif %}
+                </div>
+                <div class="form-group mb-4">
+                    {% if form.post_content.errors %}
+                        {{ form.post_content(class="form-control is-invalid", placeholder="Content", rows=10, required=False) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.post_content.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.post_content(class="form-control", placeholder="Content", rows=10, required=False) }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <a href="{{ url_for('main.home') }}" class="btn btn-danger">Cancel</a>
+                    {{ form.post_submit(class="btn btn-primary") }}
+                </div>
+            </fieldset>
+        </div>
     </form>
 {% endblock content %}

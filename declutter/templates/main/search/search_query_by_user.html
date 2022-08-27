@@ -1,17 +1,17 @@
 <!-- Query by user -->
-<div>
+<div class="ms-3">
     {% if query_by_user.items %}
-        <legend class="mt-3 ps-3 fw-semibold text-muted">Results by user</legend>
+        <legend class="mt-3 fw-semibold text-muted">Results by user</legend>
     {% endif %}
-        <ul class="list-group ps-4">
-            {% for user in query_by_user.items %}
-                <li class="list-group-item text-break">
-                    <a href="{{ url_for('users_general.user', user_username = user.user_username) }}" class="text-decoration-none text-dark">
-                        {{ user.user_username }} <span><small class="text-muted">・ Date joined: {{ datetime_tolocal(user.user_date_created_utc).strftime("%B %-d, %Y") }}</small></span>
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+    <div class="list-group ms-2">
+        {% for user in query_by_user.items %}
+            <li class="list-group-item text-break">
+                <a href="{{ url_for('users_general.user', user_username = user.user_username) }}" class="text-decoration-none text-dark">
+                    {{ user.user_username }} <span><small class="text-muted">・ Date joined: {{ datetime_tolocal(user.user_date_created_utc).strftime("%B %-d, %Y") }}</small></span>
+                </a>
+            </li>
+        {% endfor %}
+    </div>
     <div class="d-flex mt-2 justify-content-end">
         {% if request.args.get('by_user_page') %}
             <a href="{{ url_for('main.search', query = search_query) }}" class="text-decoration-none me-3"><small>Go back</small></a>

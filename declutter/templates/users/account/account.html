@@ -3,56 +3,59 @@
     <h3 class="mb-4 fw-bold">Account information</h3>
     <form action="">
         <fieldset disabled>
-            <legend class="mb-3 fw-semibold">Profile details</legend>
-
-            <div class="mb-2">
-                <label for="disabledTextEmail" class="form-label fw-semibold">Email</label>               
-                <div class="row">
-                    <div class="col-11">
-                        <input type="text" class="form-control" value="{{ current_user.user_email }}">
+            <div class="ms-3">
+                <legend class="mb-3 fw-semibold">Profile details</legend>
+                <div class="ms-2">
+                    <div class="mb-2">
+                        <label for="disabledTextEmail" class="form-label fw-semibold">Email</label>               
+                        <div class="row">
+                            <div class="col-11">
+                                <input type="text" class="form-control" value="{{ current_user.user_email }}">
+                            </div>
+                            <div class="col-1 py-1 d-flex justify-content-end" style="font-size: 1.3em;">
+                                <a href="{{ url_for('users_account.update_email') }}"><i class="bi bi-pencil-square"></i></a>
+                            </div>
+                        </div>
+                        {% if current_user.user_email_isverified %}
+                            <small class="text-success">Verified <i class="bi bi-patch-check"></i></small>
+                        {% else %}
+                            <small><a href="{{ url_for('users_account.verify_email') }}" class="link-primary ms-1">Verify email</a></small>
+                        {% endif %}                 
+        
                     </div>
-                    <div class="col-1 py-1 d-flex justify-content-end" style="font-size: 1.3em;">
-                        <a href="{{ url_for('users_account.update_email') }}"><i class="bi bi-pencil-square"></i></a>
+        
+                    <div class="mb-2">
+                        <label for="disabledTextEmail" class="form-label fw-semibold">Username</label>
+                        <div class="row">
+                            <div class="col-11">
+                                <input type="text" class="form-control" value="{{ current_user.user_username }}">
+                            </div>
+                            <div class="col-1 py-1 d-flex justify-content-end" style="font-size: 1.3em;">
+                                <a href="{{ url_for('users_account.update_username') }}"><i class="bi bi-pencil-square"></i></a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                {% if current_user.user_email_isverified %}
-                    <small class="text-success">Verified <i class="bi bi-patch-check"></i></small>
-                {% else %}
-                    <small><a href="{{ url_for('users_account.verify_email') }}" class="link-primary ms-1">Verify email</a></small>
-                {% endif %}                 
-
-            </div>
-
-            <div class="mb-2">
-                <label for="disabledTextEmail" class="form-label fw-semibold">Username</label>
-                <div class="row">
-                    <div class="col-11">
-                        <input type="text" class="form-control" value="{{ current_user.user_username }}">
+        
+                    <div class="mb-2">
+                        <label for="disabledTextEmail" class="form-label fw-semibold">Password</label>
+                        <div class="row">
+                            <div class="col-11">
+                                <input type="password" class="form-control" value="password">
+                            </div>
+                            <div class="col-1 py-1 d-flex justify-content-end" style="font-size: 1.3em;">
+                                <a href="{{ url_for('users_account.update_password') }}"><i class="bi bi-pencil-square"></i></a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-1 py-1 d-flex justify-content-end" style="font-size: 1.3em;">
-                        <a href="{{ url_for('users_account.update_username') }}"><i class="bi bi-pencil-square"></i></a>
+        
+                    <div class="mt-4 d-flex">
+                        <div class="me-auto">
+                            <small>Date created: <span class="text-muted">{{ datetime_tolocal(current_user.user_date_created_utc).strftime("%B %-d, %Y") }}</span> </small>
+                        </div>
+                        <div class="justify-content-end me-5 pe-xl-4">
+                            <small><a href="{{ url_for('users_account.deactivate_account') }}" class="text-secondary text-decoration-none">Deactivate Account</a></small>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="mb-2">
-                <label for="disabledTextEmail" class="form-label fw-semibold">Password</label>
-                <div class="row">
-                    <div class="col-11">
-                        <input type="password" class="form-control" value="password">
-                    </div>
-                    <div class="col-1 py-1 d-flex justify-content-end" style="font-size: 1.3em;">
-                        <a href="{{ url_for('users_account.update_password') }}"><i class="bi bi-pencil-square"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4 d-flex">
-                <div class="me-auto">
-                    <small>Date created: <span class="text-muted">{{ datetime_tolocal(current_user.user_date_created_utc).strftime("%B %-d, %Y") }}</span> </small>
-                </div>
-                <div class="justify-content-end me-5 pe-xl-4">
-                    <small><a href="{{ url_for('users_account.deactivate_account') }}" class="text-secondary text-decoration-none">Deactivate Account</a></small>
                 </div>
             </div>
         </fieldset>

@@ -1,9 +1,9 @@
 <!-- Query by post title -->
-<div>
+<div class="ms-3">
     {% if query_by_post_title.items %}
-        <legend class="mt-3 ps-3 fw-semibold text-muted">Results by post title</legend>
+        <legend class="mt-3 fw-semibold text-muted">Results by post title</legend>
     {% endif %}
-    <div class="ps-4 list-group">
+    <div class="ms-2 list-group">
         {% for post in query_by_post_title.items %}
             <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="list-group-item list-group-item-action">
                 <h5 class="pt-2 text-break text">{{ post.post_title }}</h5>

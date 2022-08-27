@@ -32,8 +32,10 @@
                     </div>
                 </div>                
             {% endif %}
-            <p class="mb-2 article-content text-break">{{ post.post_content }}</p>
-            <small class="text-muted" style="font-size: 0.8em;"> By <a href="{{ url_for('users_general.user', user_username = post.post_author.user_username) }}" class="article-author text-break">{{ post.post_author.user_username }}</a> on {{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y %I:%M %p") }}</small>
+            <div class="ms-3">
+                <p class="mb-2 article-content text-break">{{ post.post_content }}</p>
+                <small class="text-muted" style="font-size: 0.8em;"> By <a href="{{ url_for('users_general.user', user_username = post.post_author.user_username) }}" class="article-author text-break">{{ post.post_author.user_username }}</a> on {{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y %I:%M %p") }}</small>
+            </div>
         </div>
     </div>
 {% endblock content %}
