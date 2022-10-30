@@ -5,7 +5,7 @@
     {% endif %}
     <div class="ms-2 list-group">
         {% for post in query_by_post_title.items %}
-            <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="list-group-item list-group-item-action">
+            <a href="{{ url_for('posts_general.post', post_id = post.post_id) }}" class="list-group-item list-group-item-action">
                 <h5 class="pt-2 text-break text">{{ post.post_title }}</h5>
                 <p class="mb-2 text-break">{{ post.post_content[:190] }}...</p>
                 <small class="text-muted">{{ datetime_tolocal(post.post_date_created_utc).strftime("%B %-d, %Y") }}</small>

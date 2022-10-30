@@ -11,7 +11,7 @@ from declutter.models.posts import Posts
 
 
 posts = Blueprint(
-    name = 'posts', import_name = __name__,
+    name = 'posts_general', import_name = __name__,
     template_folder = '../../templates/posts', static_folder = '../../static')
 
 

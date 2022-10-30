@@ -13,7 +13,7 @@
         <li class="list-group-item ps-1 ps-md-3 fw-semibold">Latest posts</li>
             <div class="list-group-flush ps-3">
                 {% for post in posts_recent_10 %}
-                    <a href="{{ url_for('posts.post', post_id = post.post_id) }}" class="list-group-item text-break text-muted">{{ post.post_title }}</a>
+                    <a href="{{ url_for('posts_general.post', post_id = post.post_id) }}" class="list-group-item text-break text-muted">{{ post.post_title }}</a>
                 {% endfor %}
             </div>
         <li class="list-group-item ps-1 ps-md-3 fw-semibold">Recently joined users</li>
