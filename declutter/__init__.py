@@ -37,6 +37,9 @@ def create_app(config_class: Type[Config] = Config) -> Flask:
     migrate.init_app(app, db)
     admin.init_app(app)
 
+    admin.add_view(ModelView(Users, db.session))
+    admin.add_view(ModelView(Posts, db.session))
+
     login_manager.login_view = 'authentication.login'
     login_manager.login_message_category = 'warning'
 
