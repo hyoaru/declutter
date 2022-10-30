@@ -1,8 +1,9 @@
 from typing import Type
 from flask import Flask
+from flask_admin.contrib.sqla import ModelView
 
 # App imports
-from declutter.utilities.backend import db, bcrypt, login_manager, mail, migrate
+from declutter.utilities.backend import db, bcrypt, login_manager, mail, migrate, admin
 from declutter.config import Config
 
 # Blueprints
@@ -12,6 +13,10 @@ from declutter.blueprints.authentication.views import authentication as blueprin
 from declutter.blueprints.users.general.views import users_general as blueprint_users_general
 from declutter.blueprints.users.account.views import users_account as blueprint_users_account
 from declutter.blueprints.errors.handlers import errors as blueprint_errors
+
+# Database models
+from declutter.models.users import Users
+from declutter.models.posts import Posts
 
 def create_app(config_class: Type[Config] = Config) -> Flask:
     app = Flask(__name__, template_folder = 'templates', static_folder = 'static')
@@ -30,6 +35,7 @@ def create_app(config_class: Type[Config] = Config) -> Flask:
     login_manager.init_app(app)
     mail.init_app(app)
     migrate.init_app(app, db)
+    admin.init_app(app)
 
     login_manager.login_view = 'authentication.login'
     login_manager.login_message_category = 'warning'
