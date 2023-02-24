@@ -3,7 +3,7 @@ from flask import Flask
 from flask_admin.contrib.sqla import ModelView
 
 # App imports
-from declutter.utilities.backend import db, bcrypt, login_manager, mail, migrate, admin
+from declutter.utilities.backend import db, bcrypt, login_manager, mail, migrate
 from declutter.config import Config
 
 # Blueprints
@@ -35,10 +35,6 @@ def create_app(config_class: Type[Config] = Config) -> Flask:
     login_manager.init_app(app)
     mail.init_app(app)
     migrate.init_app(app, db)
-    admin.init_app(app)
-
-    admin.add_view(ModelView(Users, db.session))
-    admin.add_view(ModelView(Posts, db.session))
 
     login_manager.login_view = 'authentication.login'
     login_manager.login_message_category = 'warning'
