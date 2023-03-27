@@ -1,10 +1,15 @@
 from typing import Type
+from datetime import datetime
+from flask import request
 from flask import Flask
 from flask_admin.contrib.sqla import ModelView
 
 # App imports
 from declutter.utilities.backend import db, bcrypt, login_manager, mail, migrate
 from declutter.config import Config
+from declutter.utilities.datetime import datetime_tolocal
+from declutter.utilities.sidebar_elements import get_posts_recent_10, get_users_recent_10, get_daily_random_quotes
+
 
 # Blueprints
 from declutter.blueprints.main.views import main as blueprint_main
@@ -42,5 +47,12 @@ def create_app(config_class: Type[Config] = Config) -> Flask:
     with app.app_context():
         db.create_all()
         print(f'\nCreated table names: {db.engine.table_names()}')
+
+    @app.context_processor
+    def inject_global_elements():
+        return dict(
+            datetime_tolocal = datetime_tolocal, datetime_utcnow = datetime.utcnow(), 
+            posts_recent_10 = get_posts_recent_10(), users_recent_10 = get_users_recent_10(), 
+            quote_of_the_day = get_daily_random_quotes(), request = request)
 
     return app
