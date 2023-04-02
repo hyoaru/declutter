@@ -34,6 +34,7 @@ def post_create():
 
 
 @posts.route("/post/<int:post_id>")
+@login_required
 def post(post_id):
     post = Posts.query.get_or_404(post_id)
     post_author_deleted_or_deactivated = post.post_author.user_isdeleted or post.post_author.user_isdeactivated
