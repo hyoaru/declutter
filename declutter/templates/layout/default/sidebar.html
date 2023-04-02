@@ -12,13 +12,13 @@
             </div>                    
         <li class="list-group-item ps-1 ps-md-3 fw-semibold">Latest posts</li>
             <div class="list-group-flush ps-3">
-                {% for post in posts_recent_10 %}
+                {% for post in posts_recent_n %}
                     <a href="{{ url_for('posts_general.post', post_id = post.post_id) }}" class="list-group-item text-break text-muted">{{ post.post_title }}</a>
                 {% endfor %}
             </div>
         <li class="list-group-item ps-1 ps-md-3 fw-semibold">Recently joined users</li>
             <div class="list-group-flush ps-3">
-                {% for user in users_recent_10 %}
+                {% for user in users_recent_n %}
                     <a href="{{ url_for('users_general.user', user_username = user.user_username) }}" class="list-group-item text-break text-muted">{{ user.user_username }}</a>
                 {% endfor %}
             </div>                    

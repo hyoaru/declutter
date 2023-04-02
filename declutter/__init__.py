@@ -8,7 +8,7 @@ from flask_admin.contrib.sqla import ModelView
 from declutter.utilities.backend import db, bcrypt, login_manager, mail, migrate
 from declutter.config import Config
 from declutter.utilities.datetime import datetime_tolocal
-from declutter.utilities.sidebar_elements import get_posts_recent_10, get_users_recent_10, get_daily_random_quotes
+from declutter.utilities.sidebar_elements import get_posts_recent_n, get_users_recent_n, get_daily_random_quotes
 
 
 # Blueprints
@@ -52,7 +52,7 @@ def create_app(config_class: Type[Config] = Config) -> Flask:
     def inject_global_elements():
         return dict(
             datetime_tolocal = datetime_tolocal, datetime_utcnow = datetime.utcnow(), 
-            posts_recent_10 = get_posts_recent_10(), users_recent_10 = get_users_recent_10(), 
+            posts_recent_n = get_posts_recent_n(5), users_recent_n = get_users_recent_n(5), 
             quote_of_the_day = get_daily_random_quotes(), request = request)
 
     return app

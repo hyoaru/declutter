@@ -9,7 +9,7 @@ from declutter.models.posts import Posts
 from declutter.models.users import Users
 
 
-def get_posts_recent_10() -> Type[Posts]:
+def get_posts_recent_n(n: int) -> Type[Posts]:
     """Returns the recent 10 posts."""
 
     posts = (
@@ -19,19 +19,19 @@ def get_posts_recent_10() -> Type[Posts]:
             Posts.post_author.has(Users.user_isdeleted == False),)        
         .filter_by(post_isdeleted = False)
         .order_by(Posts.post_date_created_utc.desc())
-        .limit(8).all())
+        .limit(n).all())
 
     return posts
 
 
-def get_users_recent_10() -> Type[Users]:
+def get_users_recent_n(n: int) -> Type[Users]:
     """Returns the 10 recently joined users."""
 
     users = (
         Users.query
         .filter_by(user_isdeleted = False, user_isdeactivated = False)
         .order_by(Users.user_date_created_utc.desc())
-        .limit(8).all())
+        .limit(n).all())
 
     return users
 

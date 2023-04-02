@@ -4,7 +4,7 @@ from flask import request
 # App imports
 from declutter import create_app
 from declutter.utilities.datetime import datetime_tolocal
-from declutter.utilities.sidebar_elements import get_posts_recent_10, get_users_recent_10, get_daily_random_quotes
+from declutter.utilities.sidebar_elements import get_posts_recent_n, get_users_recent_n, get_daily_random_quotes
 
 # if __name__ == "__main__":
 #     app = create_app()
