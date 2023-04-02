@@ -27,13 +27,12 @@
                             <a href="{{ url_for('posts_general.post_create') }}" class="nav-link fw-semibold">Write</a>
                         </li>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle text-dark fw-semibold" data-bs-toggle="dropdown" id="navbarDropdownMenuLink">
+                            <a href="#navbarCollapsibleSection" class="nav-link dropdown-toggle text-dark fw-semibold" data-bs-toggle="collapse" id="navbarDropdownMenuLink">
                                 {{ current_user.user_username }}
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url_for('users_general.profile') }}" class="dropdown-item">Profile</a></li>
                                 <li><a href="{{ url_for('users_account.account') }}" class="dropdown-item">Account</a></li>
-                                <!-- <li><a href="{{ url_for('main.search') }}" class="dropdown-item">Search</a></li> -->
                                 <li><a href="{{ url_for('authentication.logout') }}" class="dropdown-item">Log out</a></li>
                             </ul>
                         </div>
@@ -50,9 +49,19 @@
                 {% endif %}
 
             </div>
-
+            
         </div>
     </nav>
+    {% if current_user.is_authenticated %}
+        <div class="container collapse" id="navbarCollapsibleSection" >
+            <div class="d-flex justify-content-md-end align-items-center mt-0 pb-2">
+                <small class="justify-content-start me-auto d-none d-md-block d-xl-block">Your medium to your overwhelming thoughts</small>
+                <a href="{{ url_for('users_general.profile') }}" class="text-decoration-none text-dark ms-sm-0 ms-4 me-4 fw-bold"><small>Profile</small></a>
+                <a href="{{ url_for('users_account.account') }}" class="text-decoration-none text-dark me-4 fw-bold"><small>Account</small></a>
+                <a href="{{ url_for('authentication.logout') }}" class="text-decoration-none text-dark me-4 fw-bold"><small>Log out</small></a>
+            </div>
+        </div>
+    {% endif %}
     <div class="bg-white" style="height: .7em;"></div>
 
 </header>
