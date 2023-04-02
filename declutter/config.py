@@ -7,6 +7,7 @@ class Config:
     """App configurations."""
     
     # General
+    POST_PER_PAGE = 20
     SECRET_KEY = os.getenv("SECRET_KEY")
 
     # SQLAlchemy

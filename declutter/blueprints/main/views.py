@@ -3,11 +3,13 @@ from flask_login import login_required
 
 # App imports
 from declutter.utilities.datetime import datetime_tolocal
+from declutter.config import Config
 
 # Database models
 from declutter.models.posts import Posts
 from declutter.models.users import Users
 
+post_per_page = Config.POST_PER_PAGE
 
 main = Blueprint(
     name = 'main', import_name = __name__,
@@ -24,7 +26,7 @@ def home():
             Posts.post_author.has(Users.user_isdeleted == False),)
         .filter_by(post_isdeleted = False)
         .order_by(Posts.post_date_created_utc.desc())
-        .paginate(per_page = 5, page = request.args.get(key = 'page', default = 1, type = int)))
+        .paginate(per_page = post_per_page, page = request.args.get(key = 'page', default = 1, type = int)))
 
     return render_template('home.html', posts = posts)
 
@@ -45,7 +47,7 @@ def search():
         Users.query
         .filter(Users.user_username.contains(search_query))
         .filter_by(user_isdeactivated = False, user_isdeleted = False)
-        .paginate(per_page = 5, page = request.args.get(key = 'by_user_page', default = 1, type = int)))
+        .paginate(per_page = post_per_page, page = request.args.get(key = 'by_user_page', default = 1, type = int)))
 
     query_by_post_title = (
         Posts.query
@@ -54,7 +56,7 @@ def search():
             Posts.post_author.has(Users.user_isdeactivated == False),
             Posts.post_author.has(Users.user_isdeleted == False), )
         .filter_by(post_isdeleted = False)
-        .paginate(per_page = 5, page = request.args.get(key = 'by_post_title_page', default = 1, type = int)))
+        .paginate(per_page = post_per_page, page = request.args.get(key = 'by_post_title_page', default = 1, type = int)))
 
     query_by_post_content = (
         Posts.query
@@ -63,7 +65,7 @@ def search():
             Posts.post_author.has(Users.user_isdeactivated == False),
             Posts.post_author.has(Users.user_isdeleted == False), )
         .filter_by(post_isdeleted = False)
-        .paginate(per_page = 5, page = request.args.get(key = 'by_post_content_page', default = 1, type = int)))
+        .paginate(per_page = post_per_page, page = request.args.get(key = 'by_post_content_page', default = 1, type = int)))
 
     total_items_matched = (
         len(query_by_user.items)
