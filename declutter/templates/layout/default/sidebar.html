@@ -13,21 +13,21 @@
                 <span class="list-group-item text-break text-muted">{{ quote_of_the_day.get('content') }} - {{ quote_of_the_day.get('author') }}</span>
             </div>  
 
-            <a class="d-flex ps-1 list-group-item ps-md-3" href="#latestPostsCollapseSection" data-bs-toggle="collapse">
+            <a class="d-flex ps-1 list-group-item ps-md-3" data-bs-target=".multi-collapse" data-bs-toggle="collapse">
                 <span class="me-auto fw-semibold text-decoration-none text-dark">Latest posts</span>
                 <i class="btn btn-sm dropdown-toggle"></i>
             </a>
-            <div class="list-group-flush ps-3 show" id="latestPostsCollapseSection">
+            <div class="list-group-flush ps-3 collapse multi-collapse" id="latestPostsCollapseSection">
                 {% for post in posts_recent_n %}
                     <a href="{{ url_for('posts_general.post', post_id = post.post_id) }}" class="list-group-item text-break text-muted">{{ post.post_title }}</a>
                 {% endfor %}
             </div>
 
-            <a class="d-flex ps-1 list-group-item ps-md-3" href="#recentlyJoinedUsersCollapseSection" data-bs-toggle="collapse">
+            <a class="d-flex ps-1 list-group-item ps-md-3" data-bs-target=".multi-collapse" data-bs-toggle="collapse">
                 <span class="me-auto fw-semibold text-decoration-none text-dark">Recently joined users</span>
                 <i class="btn btn-sm dropdown-toggle"></i>
             </a>
-            <div class="list-group-flush ps-3 show" id="recentlyJoinedUsersCollapseSection">
+            <div class="list-group-flush ps-3 show multi-collapse" id="recentlyJoinedUsersCollapseSection">
                 {% for user in users_recent_n %}
                     <a href="{{ url_for('users_general.user', user_username = user.user_username) }}" class="list-group-item text-break text-muted">{{ user.user_username }}</a>
                 {% endfor %}
