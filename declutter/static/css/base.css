@@ -31,4 +31,5 @@ body::-webkit-scrollbar {
 .heading-sticky {
     position: sticky;
     top: 6rem;
+    z-index: 3;
 }
