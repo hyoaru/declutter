@@ -25,9 +25,9 @@
 <body class="px-4">
     {% include '/layout/default/header.html' %}
 
-    <main class="my-5 py-5 container">
-        <div class="div" style="height: 10px"></div>
-        <div class="row">
+    <main class="mt-5 pt-5 mb-5 container">
+        <!-- <div class="div" style="height: 10px"></div> -->
+        <div class="row position-relative">
             <section class="col-md-8 px-3 pe-md-5">
                 {% with messages = get_flashed_messages(with_categories = true) %}
                     {% if messages %}

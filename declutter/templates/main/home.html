@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h3 class="mb-4 fw-bold">Home</h3>
+    <div class="bg-white position-sticky" style="top: 6rem;">
+        <h3 class="mb-4 fw-bold">Home</h3>
+    </div>
+
     {% if not posts.items %}
         <div class="d-flex justify-content-center opacity-75 mb-3">
             <div class="text-center">
