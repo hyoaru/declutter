@@ -14,3 +14,8 @@ html {
 .page-nav{
     font-size: 0.8em;
 }
+
+.heading-sticky {
+    position: sticky;
+    top: 6rem;
+}
