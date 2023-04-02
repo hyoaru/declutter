@@ -18,6 +18,7 @@ main = Blueprint(
 
 @main.route("/")
 @main.route("/home", methods = ['GET', 'POST'])
+@login_required
 def home():
     posts = (
         Posts.query
