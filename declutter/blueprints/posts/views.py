@@ -38,6 +38,7 @@ def post_create():
 def post(post_id):
     post = Posts.query.get_or_404(post_id)
     post_author_deleted_or_deactivated = post.post_author.user_isdeleted or post.post_author.user_isdeactivated
+    print(current_user.user_isadmin)
     if post.post_isdeleted or post_author_deleted_or_deactivated:
         abort(404)
     else:
@@ -47,11 +48,10 @@ def post(post_id):
 @posts.route("/post/<int:post_id>/delete", methods = ['POST'])
 def post_delete(post_id):
     post = Posts.query.get_or_404(post_id)
-    if post.post_author != current_user:
+    if (post.post_author != current_user) and (current_user.user_isadmin == False):
         abort(403)
     else:
         post.post_isdeleted = True
-        # db.session.delete(post)
         db.session.commit()
         flash('Your post has been deleted!', 'success')
         return redirect(request.referrer)

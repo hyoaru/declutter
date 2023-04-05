@@ -1,7 +1,7 @@
 {% for post in posts.items %}
     <div class="media border-bottom mb-4 ms-3 pb-4">
         <div class="media-body">
-            {% if post.post_author != current_user %}
+            {% if ((post.post_author != current_user) and (current_user.user_isadmin == False)) %}
                 <h4> <a href="{{ url_for('posts_general.post', post_id = post.post_id) }}" class="article-title fw-semibold text-break">{{ post.post_title }}</a></h4>
             {% else %}
                 <div class="d-flex">
