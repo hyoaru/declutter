@@ -18,6 +18,7 @@ def load_user(user_id):
 class Users(db.Model, UserMixin):
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key = True)
+    user_profile_image_path = db.Column(db.String(200), nullable = True, default = 'profile_image.jpg')
     user_isadmin = db.Column(db.Boolean, nullable = False, default = False)
     user_ismuted = db.Column(db.Boolean, nullable = False, default = False)
     user_email = db.Column(db.String(200), nullable = False, unique = True)
