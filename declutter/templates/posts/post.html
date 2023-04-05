@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="media">
+    <div class="media mt-1">
         <div class="media-body">
             {% if post.post_author != current_user %}
                 <h3 class="article-title fw-bold text-break">{{ post.post_title }}</h3>
