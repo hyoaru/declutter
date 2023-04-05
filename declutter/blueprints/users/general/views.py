@@ -52,3 +52,45 @@ def user(user_username):
 
     else:
         return redirect(url_for('users_general.profile'))
+    
+@users_general.route("/user/<user_username>/deleted_posts")
+@login_required
+def user_deleted_posts(user_username):
+    user = (
+        Users.query
+        .filter_by(user_username = user_username)
+        .first_or_404())
+    
+    if user == current_user:
+        return redirect(url_for('users_general.profile_deleted_posts'))
+    
+    if current_user.user_isadmin == False:
+        abort(403)
+    else:
+        posts = (
+            Posts.query
+            .filter_by(post_author = user, post_isdeleted = True)
+            .order_by(Posts.post_date_created_utc.desc())
+            .paginate(per_page = post_per_page, page = request.args.get(key = 'page', default = 1, type = int)))
+        
+        return render_template(
+            'user_deleted_posts.html', title = user.user_username, user = user, 
+            posts = posts, post_count = posts.total)
+
+@users_general.route("/profile/deleted_posts")
+@login_required
+def profile_deleted_posts():
+    user = current_user
+    
+    if current_user.user_isadmin == False:
+        abort(403)
+    else:
+        posts = (
+            Posts.query
+            .filter_by(post_author = user, post_isdeleted = True)
+            .order_by(Posts.post_date_created_utc.desc())
+            .paginate(per_page = post_per_page, page = request.args.get(key = 'page', default = 1, type = int)))
+        
+        return render_template(
+            'user_deleted_posts.html', title = user.user_username, user = user, 
+            posts = posts, post_count = posts.total)

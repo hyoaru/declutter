@@ -38,8 +38,7 @@ def post_create():
 def post(post_id):
     post = Posts.query.get_or_404(post_id)
     post_author_deleted_or_deactivated = post.post_author.user_isdeleted or post.post_author.user_isdeactivated
-    print(current_user.user_isadmin)
-    if post.post_isdeleted or post_author_deleted_or_deactivated:
+    if ((post.post_isdeleted or post_author_deleted_or_deactivated) and (current_user.user_isadmin == False)):
         abort(404)
     else:
         return render_template('post.html', title = post.post_title, post = post, )
