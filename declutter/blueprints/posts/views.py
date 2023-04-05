@@ -18,17 +18,20 @@ posts = Blueprint(
 @posts.route("/post/write", methods = ['GET', 'POST'])
 @login_required
 def post_create():
-    post_create_form = PostCreate()
-    if post_create_form.validate_on_submit():
-        post = Posts(
-            post_title = post_create_form.post_title.data,
-            post_content = post_create_form.post_content.data,
-            post_author = current_user, )
+    if current_user.user_ismuted:
+        abort(403)
+    else: 
+        post_create_form = PostCreate()
+        if post_create_form.validate_on_submit():
+            post = Posts(
+                post_title = post_create_form.post_title.data,
+                post_content = post_create_form.post_content.data,
+                post_author = current_user, )
 
-        db.session.add(post)
-        db.session.commit()
-        flash('Your post has been created!', 'success')
-        return redirect(url_for('main.home'))
+            db.session.add(post)
+            db.session.commit()
+            flash('Your post has been created!', 'success')
+            return redirect(url_for('main.home'))
 
     return render_template('post_create.html', title = 'Write', form = post_create_form)
 

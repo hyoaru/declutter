@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 
 # App imports
 from declutter.utilities.datetime import datetime_tolocal
+from declutter.utilities.backend import db
 from declutter.config import Config
 
 # Database models
@@ -94,3 +95,36 @@ def profile_deleted_posts():
         return render_template(
             'user_deleted_posts.html', title = user.user_username, user = user, 
             posts = posts, post_count = posts.total)
+    
+@users_general.route("/user/<user_username>/mute")
+@login_required
+def mute_user(user_username):
+    user = (
+        Users.query
+        .filter_by(user_username = user_username)
+        .first_or_404())
+    
+    if ((current_user.user_isadmin == False) or (user.user_isadmin)):
+        abort(403)
+    else:
+        user.user_ismuted = True
+        db.session.commit()
+
+    return redirect(request.referrer)
+    
+@users_general.route("/user/<user_username>/unmute")
+@login_required
+def unmute_user(user_username):
+    user = (
+        Users.query
+        .filter_by(user_username = user_username)
+        .first_or_404())
+    
+    if ((current_user.user_isadmin == False) or (user.user_isadmin)):
+        abort(403)
+    else:
+        user.user_ismuted = False
+        db.session.commit()
+
+    return redirect(request.referrer)
+    

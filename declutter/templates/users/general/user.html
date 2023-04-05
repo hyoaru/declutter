@@ -9,6 +9,11 @@
                 <div class="btn-group dropstart">
                     <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"></button>
                     <ul class="dropdown-menu">
+                        {% if user.user_ismuted %}
+                            <a href="{{ url_for('users_general.unmute_user', user_username = user.user_username) }}" class="dropdown-item p-0 px-3">Unmute</a>
+                        {% else %}
+                            <a href="{{ url_for('users_general.mute_user', user_username = user.user_username) }}" class="dropdown-item p-0 px-3">Mute</a>
+                        {% endif %}
                         <a href="{{ url_for('users_general.user_deleted_posts', user_username = user.user_username) }}" class="dropdown-item p-0 px-3">See deleted posts</a>
                     </ul>
                 </div>
