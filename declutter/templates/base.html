@@ -22,13 +22,13 @@
     {% endif %}
 </head>
 
-<body class="px-4">
+<body>
     {% include '/layout/default/header.html' %}
 
-    <main class="mt-5 pt-5 mb-5 container">
+    <main class="mt-5 pt-5 mb-3 container px-5">
         <!-- <div class="div" style="height: 10px"></div> -->
         <div class="row position-relative">
-            <section class="col-md-8 px-3 pe-md-5">
+            <section class="col-12 col-md-8 px-3 pe-md-5 ">
                 {% with messages = get_flashed_messages(with_categories = true) %}
                     {% if messages %}
                         {% for category, message in messages %}
@@ -38,12 +38,14 @@
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
-
+                
                 {% block content %}{% endblock content %}
             </section>
             {% include '/layout/default/sidebar.html' %}
         </div>
     </main>
+
+    {% include 'layout/default/footer.html' %}
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>    
