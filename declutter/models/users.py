@@ -18,6 +18,7 @@ def load_user(user_id):
 class Users(db.Model, UserMixin):
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key = True)
+    user_isadmin = db.Column(db.Boolean, nullable = False, default = False)
     user_email = db.Column(db.String(200), nullable = False, unique = True)
     user_email_isverified = db.Column(db.Boolean, nullable = False, default = False)
     user_username = db.Column(db.String(40), nullable = False, unique = True)
