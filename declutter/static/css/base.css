@@ -20,6 +20,10 @@ body::-webkit-scrollbar {
     color: #212529;
 }
 
+.article-content {
+    white-space: pre-wrap;
+}
+
 .article-author {
     text-decoration: None;
 }
