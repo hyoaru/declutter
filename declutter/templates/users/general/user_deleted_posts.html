@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="mb-0 pb-3 heading-sticky bg-white">
+    <div class="mb-0 mt-1 pb-3 heading-sticky bg-white">
         <h3 class="mb-0 text-break fw-bold">{{ user.user_username }} </h3>
         <small class="text-muted">Date joined: {{ datetime_tolocal(user.user_date_created_utc).strftime("%B %-d, %Y") }}</small>
     </div>

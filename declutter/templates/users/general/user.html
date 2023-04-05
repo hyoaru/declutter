@@ -1,7 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="mb-2 pb-3 heading-sticky bg-white">
-        <h3 class="mb-0 text-break fw-bold">{{ user.user_username }} </h3>
+    <div class="mb-2 mt-1 pb-3 heading-sticky bg-white">
+        {% if current_user.user_isadmin == False %}
+            <h3 class="mb-0 me-auto text-break fw-bold">{{ user.user_username }} </h3>
+        {% else %}
+            <div class="d-flex">
+                <h3 class="mb-0 me-auto text-break fw-bold">{{ user.user_username }} </h3>
+                <div class="btn-group dropstart">
+                    <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"></button>
+                    <ul class="dropdown-menu">
+                        <a href="{{ url_for('users_general.user_deleted_posts', user_username = user.user_username) }}" class="dropdown-item p-0 px-3">See deleted posts</a>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
         <small class="text-muted">Date joined: {{ datetime_tolocal(user.user_date_created_utc).strftime("%B %-d, %Y") }}</small>
     </div>
     {% if not posts.items %}
