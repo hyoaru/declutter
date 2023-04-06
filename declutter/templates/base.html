@@ -30,10 +30,10 @@
 <body>
     {% include '/layout/default/header.html' %}
 
-    <main class="mt-5 pt-5 mb-3 container px-5">
+    <main class="mt-5 pt-5 mb-3 container">
         <!-- <div class="div" style="height: 10px"></div> -->
-        <div class="row position-relative">
-            <section class="col-12 col-md-8 px-3 pe-md-5 ">
+        <div class="row position-relative container">
+            <section class="col-12 col-md-8 pe-md-5 ">
                 {% with messages = get_flashed_messages(with_categories = true) %}
                     {% if messages %}
                         {% for category, message in messages %}
@@ -46,7 +46,11 @@
                 
                 {% block content %}{% endblock content %}
             </section>
-            {% include '/layout/default/sidebar.html' %}
+
+            <aside class="col-12 col-md-4 mt-4 mt-md-0">
+                {% include '/layout/default/sidebar.html' %}
+            </aside>
+
         </div>
     </main>
 
