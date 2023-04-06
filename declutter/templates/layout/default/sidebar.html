@@ -1,5 +1,7 @@
 <div class="d-none d-sm-none d-md-block heading-sticky mt-1">
-    <h3 class="mb-3 fw-bold">{{ datetime_tolocal(datetime_utcnow).strftime("%B %-d, %Y") }}</h3>
+    <div class="heading-sticky bg-white">
+        <h3 class="mb-3 fw-bold">{{ datetime_tolocal(datetime_utcnow).strftime("%B %-d, %Y") }}</h3>
+    </div>
     <ul class="list-group list-group-flush">
         {% if current_user.is_authenticated and request.path != "/search" %}
             <div class="mt-1"></div>
