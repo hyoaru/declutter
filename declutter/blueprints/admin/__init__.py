@@ -1,0 +1,1 @@
+from declutter.blueprints.admin.views import admin

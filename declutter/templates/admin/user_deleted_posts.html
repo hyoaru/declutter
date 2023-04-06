@@ -17,10 +17,10 @@
         {% include '/layout/defined/post_list_read.html' %}
         <div class="d-flex justify-content-end">
             {% if posts.has_prev %}
-                <a href="{{ url_for('users_general.user', user_username = user.user_username, page = posts.page - 1) }}"><i class="bi bi-caret-left-fill page-nav"></i></a>
+                <a href="{{ url_for('admin.user_deleted_posts', user_username = user.user_username, page = posts.page - 1) }}"><i class="bi bi-caret-left-fill page-nav"></i></a>
             {% endif %}
             {% if posts.has_next %}
-                <a href="{{ url_for('users_general.user', user_username = user.user_username, page = posts.page + 1) }}"><i class="ms-3 bi bi-caret-right-fill page-nav"></i></a>
+                <a href="{{ url_for('admin.user_deleted_posts', user_username = user.user_username, page = posts.page + 1) }}"><i class="ms-3 bi bi-caret-right-fill page-nav"></i></a>
             {% endif %}
         </div>
     {% endif %}

@@ -9,7 +9,7 @@
                 <div class="btn-group dropstart">
                     <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"></button>
                     <ul class="dropdown-menu">
-                        <a href="{{ url_for('users_general.user_deleted_posts', user_username = current_user.user_username) }}" class="dropdown-item p-0 px-3">See deleted posts</a>
+                        <a href="{{ url_for('admin.user_deleted_posts', user_username = current_user.user_username) }}" class="dropdown-item p-0 px-3">See deleted posts</a>
                     </ul>
                 </div>
             </div>

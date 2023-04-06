@@ -14,9 +14,9 @@
                             <a href="#" class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown"></a>
                             <div class="dropdown-menu">
                                 {% if post.post_author.user_ismuted %}
-                                    <a href="{{ url_for('users_general.unmute_user', user_username = post.post_author.user_username) }}" class="dropdown-item p-0 px-3">Unmute</a>
+                                    <a href="{{ url_for('admin.unmute_user', user_username = post.post_author.user_username) }}" class="dropdown-item p-0 px-3">Unmute</a>
                                 {% else %}
-                                    <a href="{{ url_for('users_general.mute_user', user_username = post.post_author.user_username) }}" class="dropdown-item p-0 px-3">Mute</a>
+                                    <a href="{{ url_for('admin.mute_user', user_username = post.post_author.user_username) }}" class="dropdown-item p-0 px-3">Mute</a>
                                 {% endif %}
                                 <button class="dropdown-item p-0 px-3" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ post.post_id }}">Delete</button>
                             </div>

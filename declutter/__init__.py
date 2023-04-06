@@ -17,6 +17,7 @@ from declutter.blueprints.posts.views import posts as blueprint_posts
 from declutter.blueprints.authentication.views import authentication as blueprint_authentication
 from declutter.blueprints.users.general.views import users_general as blueprint_users_general
 from declutter.blueprints.users.account.views import users_account as blueprint_users_account
+from declutter.blueprints.admin.views import admin as blueprint_admin
 from declutter.blueprints.errors.handlers import errors as blueprint_errors
 
 # Database models
@@ -33,6 +34,7 @@ def create_app(config_class: Type[Config] = Config) -> Flask:
     app.register_blueprint(blueprint_authentication)
     app.register_blueprint(blueprint_users_general)
     app.register_blueprint(blueprint_users_account)
+    app.register_blueprint(blueprint_admin)
     app.register_blueprint(blueprint_errors)
 
     db.init_app(app)
