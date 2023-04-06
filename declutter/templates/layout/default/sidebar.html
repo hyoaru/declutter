@@ -5,12 +5,19 @@
             <div class="mt-1"></div>
             {% include '/layout/default/search_bar.html' %}
         {% endif %}
+
         <li class="list-group-item ps-1 ps-md-3 fw-semibold">Announcements</li>
+        {% if announcement != ' ' %}
+            <div class="list-group-flush ps-3">
+                <span class="list-group-item text-break text-muted" style="white-space: pre-wrap">{{ announcement }}</span>
+            </div> 
+        {% endif %}
 
         <li class="list-group-item ps-1 ps-md-3 fw-semibold">Daily quote</li>
         <div class="list-group-flush ps-3">
             <span class="list-group-item text-break text-muted">{{ quote_of_the_day.get('content') }} - {{ quote_of_the_day.get('author') }}</span>
         </div>  
+
 
         <a class="d-flex ps-1 list-group-item ps-md-3" data-bs-target=".multi-collapse" data-bs-toggle="collapse">
             <span class="me-auto fw-semibold text-decoration-none text-dark">Latest posts</span>

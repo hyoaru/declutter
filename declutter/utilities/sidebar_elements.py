@@ -83,3 +83,14 @@ def get_daily_random_quotes(api: str = "https://api.quotable.io/random?tags=famo
         saveto_binary(obj_structure = quote, file_name = 'sidebar_daily_quote')
 
         return quote
+    
+
+def get_announcement() -> str:
+    announcement_link = 'https://raw.githubusercontent.com/hyoaru/declutter/master/declutter/data/announcement.txt'
+    try:
+        announcement = requests.get(announcement_link).json()['announcement']
+    except:
+        announcement = ' '
+
+    return announcement
+
