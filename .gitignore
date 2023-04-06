@@ -3,6 +3,7 @@
 /test/
 /migrations/
 /instance/
+/admin/
 
 # Files
 .env
