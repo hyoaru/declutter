@@ -30,27 +30,29 @@
 <body>
     {% include '/layout/default/header.html' %}
 
-    <main class="mt-5 pt-5 mb-3 container">
-        <!-- <div class="div" style="height: 10px"></div> -->
-        <div class="row position-relative container">
-            <section class="col-12 col-md-8 pe-md-5 ">
-                {% with messages = get_flashed_messages(with_categories = true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            <div class="alert alert-{{ category }} mb-4 pb-3 mt-1" role="alert">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                
-                {% block content %}{% endblock content %}
-            </section>
-
-            <aside class="col-12 col-md-4 mt-4 mt-md-0">
-                {% include '/layout/default/sidebar.html' %}
-            </aside>
-
+    <main class="mb-3 container">
+        <div class="d-block d-sm-none" style="height: 4em;"></div>
+        <div class="d-none d-sm-block d-xl-block" style="height: 5em;"></div>
+        <div class="position-relative container">
+            <div class="row">
+                <section class="col-12 col-sm-12 col-md-8 ">
+                    {% with messages = get_flashed_messages(with_categories = true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} mb-4 pb-3 mt-3" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    {% block content %}{% endblock content %}
+                </section>
+    
+                <aside class="col-12 col-sm-12 col-md-4 mt-4 mt-md-0">
+                    {% include '/layout/default/sidebar.html' %}
+                </aside>
+            </div>
         </div>
     </main>
 
