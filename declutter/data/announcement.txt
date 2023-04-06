@@ -1,1 +1,1 @@
-{"announcement":"test\\n\\nline break test"}
+{"announcement":" "}
