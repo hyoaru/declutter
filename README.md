@@ -1,6 +1,6 @@
 # Declutter
 Declutter is a web application that provides a platform for users to write and share their thoughts in a clutter-free space. The website is built around the notion of decluttering your mind by writing, enabling users to organize their thoughts, ideas, and feelings through writing.
-* See live at - https://declutter.up.railway.app
+* See live at - https://declutter.onrender.com
 
 ## User interface
 The Declutter interface is user-friendly, making it easy for users to start writing immediately. The platform is designed to inspire users to write and share their thoughts, with features such as daily writing prompts, a community forum, and a collection of inspirational quotes to keep users motivated.
